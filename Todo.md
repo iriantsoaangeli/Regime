@@ -23,6 +23,9 @@
       - [x] Accueil 
       - [x] Regime 
       - [x] Sports
+      - [ ] Accueil sans compte
+      - [ ] Login
+      - [ ] Inscription
     - [ ] Créer les maquettes statiques du Back Office. 
       - [ ] Dashboard
       - [ ] Liste des regimes
