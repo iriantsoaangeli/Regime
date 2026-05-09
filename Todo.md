@@ -27,10 +27,13 @@
       - [ ] Login
       - [ ] Inscription
     - [ ] Créer les maquettes statiques du Back Office. 
-      - [ ] Dashboard
-      - [ ] Liste des regimes
+      - [x] Dashboard
+      - [x] Liste des regimes
       - [ ] Editer regimer
-      - [ ] Creer regime 
+      - [ ] Creer regime
+      - [x] Liste des activites sportives
+      - [ ] Creation activite
+      - [ ] Modif activite  
 - [ ] **Données de test**
     - [x] Insérer manuellement 5 utilisateurs. 
     - [x] Insérer 5 régimes et 5 sports. 
