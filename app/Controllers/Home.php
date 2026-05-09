@@ -8,4 +8,9 @@ class Home extends BaseController
     {
         return view('index-front');
     }
+
+    public function regime(): string
+    {
+        return view('regime');
+    }
 }
