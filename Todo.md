@@ -12,6 +12,10 @@
       - [ x ] Regime 
       - [ x ] Sports
     - [ ] Créer les maquettes statiques du Back Office. 
+      - [ ] Dashboard
+      - [ ] Liste des regimes
+      - [ ] Editer regimer
+      - [ ] Creer regime 
 - [ ] **Données de test**
     - [ x ] Insérer manuellement 5 utilisateurs. 
     - [ x ] Insérer 5 régimes et 5 sports. 
