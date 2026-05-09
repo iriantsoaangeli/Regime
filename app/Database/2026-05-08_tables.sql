@@ -215,9 +215,6 @@ CREATE TABLE regimes (
   id           INT      NOT NULL AUTO_INCREMENT,
   nom          VARCHAR(150) NOT NULL,
   description  TEXT,
-  pct_viande   DECIMAL(5,2) NOT NULL DEFAULT 0.00,
-  pct_poisson  DECIMAL(5,2) NOT NULL DEFAULT 0.00,
-  pct_volaille DECIMAL(5,2) NOT NULL DEFAULT 0.00,
   is_actif     TINYINT(1)   NOT NULL DEFAULT 1,
   created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -255,6 +252,48 @@ CREATE TABLE activites_sportives (
   PRIMARY KEY (id),
   KEY idx_activite_categorie (categorie_id),
   CONSTRAINT fk_activite_categorie FOREIGN KEY (categorie_id) REFERENCES ref_categories_activite(id)
+);
+
+CREATE TABLE nourritures (
+  id           INT      NOT NULL AUTO_INCREMENT,
+  nom          VARCHAR(150) NOT NULL,
+  description  TEXT,
+  is_actif     TINYINT(1)   NOT NULL DEFAULT 1,
+  created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE regime_nourritures (
+  id          INT      NOT NULL AUTO_INCREMENT,
+  regime_id   INT      NOT NULL,
+  nourriture_id INT     NOT NULL,
+  pct_viande   DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+  pct_poisson  DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+  pct_volaille DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_regime_nourriture (regime_id, nourriture_id),
+  CONSTRAINT fk_rn_regime FOREIGN KEY (regime_id) REFERENCES regimes(id) ON DELETE CASCADE,
+  CONSTRAINT fk_rn_nourriture FOREIGN KEY (nourriture_id) REFERENCES nourritures(id) ON DELETE CASCADE
+);
+
+CREATE TABLE objectif_regime (
+  id          INT      NOT NULL AUTO_INCREMENT,
+  objectif_id   INT      NOT NULL,
+  regime_id    INT      NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_objectif_regime (objectif_id, regime_id),
+  CONSTRAINT fk_or_objectif FOREIGN KEY (objectif_id) REFERENCES ref_objectifs(id) ON DELETE CASCADE,
+  CONSTRAINT fk_or_regime FOREIGN KEY (regime_id) REFERENCES regimes(id) ON DELETE CASCADE
+);
+
+CREATE TABLE objectif_activites (
+  id          INT      NOT NULL AUTO_INCREMENT,
+  objectif_id   INT      NOT NULL,
+  activite_id INT      NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_objectif_activite (objectif_id, activite_id),
+  CONSTRAINT fk_oa_objectif FOREIGN KEY (objectif_id) REFERENCES ref_objectifs(id) ON DELETE CASCADE,
+  CONSTRAINT fk_oa_activite FOREIGN KEY (activite_id) REFERENCES activites_sportives(id) ON DELETE CASCADE
 );
 
 
