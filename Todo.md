@@ -4,22 +4,22 @@
 *Objectif : Mise en place de l'environnement et du visuel.*
 
 - [ ] **Base de données (SQL)**
-    - [ x ] Créer les tables 
-    - [ x ] Exporter le script SQL initial. 
+    - [x] Créer les tables 
+    - [x] Exporter le script SQL initial. 
 - [ ] **Vues (HTML/CSS)**
     - [ ] Créer les maquettes statiques du Front Office.
-      - [ x ] Accueil 
-      - [ x ] Regime 
-      - [ x ] Sports
+      - [x] Accueil 
+      - [x] Regime 
+      - [x] Sports
     - [ ] Créer les maquettes statiques du Back Office. 
       - [ ] Dashboard
       - [ ] Liste des regimes
       - [ ] Editer regimer
       - [ ] Creer regime 
 - [ ] **Données de test**
-    - [ x ] Insérer manuellement 5 utilisateurs. 
-    - [ x ] Insérer 5 régimes et 5 sports. 
-    - [ x ] Insérer 15 codes de recharge. 
+    - [x] Insérer manuellement 5 utilisateurs. 
+    - [x] Insérer 5 régimes et 5 sports. 
+    - [x] Insérer 15 codes de recharge. 
 
 ## 🟡 Phase 2 : Connectivité & CRUD (Moyenne)
 *Objectif : Rendre l'application dynamique.*
