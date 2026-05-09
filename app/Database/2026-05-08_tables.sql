@@ -143,7 +143,6 @@ CREATE TABLE abonnements_gold (
   CONSTRAINT fk_gold_utilisateur FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE
 );
 
-
 -- ============================================================
 --  PORTEFEUILLE
 -- ============================================================
@@ -203,7 +202,6 @@ CREATE TABLE mouvements_portefeuille (
   CONSTRAINT fk_mvt_code         FOREIGN KEY (code_id)             REFERENCES codes_portefeuille(id)
 );
 
-
 -- ============================================================
 --  RÉGIMES & ACTIVITÉS
 -- ============================================================
@@ -218,7 +216,7 @@ CREATE TABLE regimes (
   is_actif     TINYINT(1)   NOT NULL DEFAULT 1,
   created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
+  PRIMARY KEY (id)
 );
 
 -- ------------------------------------------------------------
@@ -254,6 +252,10 @@ CREATE TABLE activites_sportives (
   CONSTRAINT fk_activite_categorie FOREIGN KEY (categorie_id) REFERENCES ref_categories_activite(id)
 );
 
+-- ------------------------------------------------------------
+--  nourritures
+-- ------------------------------------------------------------
+
 CREATE TABLE nourritures (
   id           INT      NOT NULL AUTO_INCREMENT,
   nom          VARCHAR(150) NOT NULL,
@@ -267,14 +269,17 @@ CREATE TABLE regime_nourritures (
   id          INT      NOT NULL AUTO_INCREMENT,
   regime_id   INT      NOT NULL,
   nourriture_id INT     NOT NULL,
-  pct_viande   DECIMAL(5,2) NOT NULL DEFAULT 0.00,
-  pct_poisson  DECIMAL(5,2) NOT NULL DEFAULT 0.00,
-  pct_volaille DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+  pct_nourriture DECIMAL(5,2) NOT NULL DEFAULT 0.00,
   PRIMARY KEY (id),
   UNIQUE KEY uq_regime_nourriture (regime_id, nourriture_id),
   CONSTRAINT fk_rn_regime FOREIGN KEY (regime_id) REFERENCES regimes(id) ON DELETE CASCADE,
   CONSTRAINT fk_rn_nourriture FOREIGN KEY (nourriture_id) REFERENCES nourritures(id) ON DELETE CASCADE
 );
+
+-------------------------------------------------------------
+--  objectif_regime & objectif_activites
+--  Tables de liaison N-N entre objectifs et régimes/activités
+-- ------------------------------------------------------------
 
 CREATE TABLE objectif_regime (
   id          INT      NOT NULL AUTO_INCREMENT,
@@ -295,7 +300,6 @@ CREATE TABLE objectif_activites (
   CONSTRAINT fk_oa_objectif FOREIGN KEY (objectif_id) REFERENCES ref_objectifs(id) ON DELETE CASCADE,
   CONSTRAINT fk_oa_activite FOREIGN KEY (activite_id) REFERENCES activites_sportives(id) ON DELETE CASCADE
 );
-
 
 -- ============================================================
 --  COMMANDES & SUIVI
