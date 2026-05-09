@@ -7,7 +7,8 @@
     - [ x ] Créer les tables 
     - [ x ] Exporter le script SQL initial. 
 - [ ] **Vues (HTML/CSS)**
-    - [ ] Créer les maquettes statiques du Front Office. 
+    - [ ] Créer les maquettes statiques du Front Office.
+      - [ x ] Accueil 
     - [ ] Créer les maquettes statiques du Back Office. 
 - [ ] **Données de test**
     - [ x ] Insérer manuellement 5 utilisateurs. 
