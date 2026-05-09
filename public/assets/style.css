@@ -528,6 +528,198 @@ main.main {
   color: #4b5563;
 }
 
+/* ── SPORT BANNER ─────────────────────────────────────────── */
+.sport-banner {
+  background: linear-gradient(135deg, #5b7cf6 0%, #6d4aff 100%);
+  border-radius: var(--radius-lg);
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 4px 20px rgba(99,102,241,.3);
+}
+
+.sport-banner__icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(255,255,255,.2);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.sport-banner__icon svg { width: 28px; height: 28px; }
+
+.sport-banner__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.sport-banner__sub {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,.8);
+}
+
+/* ── SPORT ACTIVITY LIST ──────────────────────────────────── */
+.sport-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sport-activity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  border-left: 4px solid transparent;
+}
+
+.sport-activity--indigo {
+  background: var(--indigo-light);
+  border-left-color: var(--indigo);
+}
+.sport-activity--green {
+  background: var(--green-light);
+  border-left-color: var(--green);
+}
+
+.sport-activity__left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sport-activity__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.sport-activity__icon--indigo { background: var(--indigo); }
+.sport-activity__icon--green  { background: var(--green); }
+
+.sport-activity__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+.sport-activity__sub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.sport-activity__duration {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.sport-activity__num {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.sport-activity__unit {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+.sport-activity__duration--indigo .sport-activity__num { color: var(--indigo); }
+.sport-activity__duration--green  .sport-activity__num { color: var(--green); }
+
+/* ── PROPOSALS GRID ───────────────────────────────────────── */
+.proposals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.proposal-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: box-shadow var(--transition);
+}
+.proposal-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+
+.proposal-card__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.proposal-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.proposal-icon--orange { background: var(--orange-light); }
+.proposal-icon--blue   { background: var(--blue-light); }
+.proposal-icon--purple { background: var(--indigo-light); }
+.proposal-icon--green  { background: var(--green-light); }
+
+.proposal-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+.proposal-card__sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.proposal-card__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.proposal-card__duration {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--orange);
+}
+
+.btn-ajouter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: var(--green);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background var(--transition), transform var(--transition);
+}
+.btn-ajouter svg { width: 14px; height: 14px; }
+.btn-ajouter:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+
+/* ── RESPONSIVE (sport) ───────────────────────────────────── */
+@media (max-width: 640px) {
+  .proposals-grid { grid-template-columns: 1fr; }
+  .sport-banner   { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; }
+}
+
 /* ── CALORIE BANNER ───────────────────────────────────────── */
 .calorie-banner {
   background: linear-gradient(135deg, #22c55e 0%, #059669 100%);
