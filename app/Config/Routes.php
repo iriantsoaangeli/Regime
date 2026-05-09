@@ -7,3 +7,4 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('/regime', 'Home::regime');
+$routes->get('/sport', 'Home::sport');

@@ -13,4 +13,9 @@ class Home extends BaseController
     {
         return view('regime');
     }
+
+    public function sport(): string
+    {
+        return view('sport');
+    }
 }
