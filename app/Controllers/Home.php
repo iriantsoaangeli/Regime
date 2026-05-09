@@ -18,4 +18,17 @@ class Home extends BaseController
     {
         return view('sport');
     }
+
+    public function dashboard(): string
+    {
+        return view('dashboard');
+    }
+    public function adminRegime(): string
+    {
+        return view('admin-regime');
+    }
+    public function adminSport(): string
+    {
+        return view('admin-sport');
+    }   
 }
