@@ -185,7 +185,7 @@ CREATE TABLE codes_portefeuille (
 -- ------------------------------------------------------------
 CREATE TABLE mouvements_portefeuille (
   id                   INT      NOT NULL AUTO_INCREMENT,
-  portefeuille_id      INT      NOT NULL,
+  utilisateur_id       INT      NOT NULL,
   type_transaction_id  TINYINT  NOT NULL,
   commande_id          INT     ,
   code_id              INT     ,
@@ -195,9 +195,9 @@ CREATE TABLE mouvements_portefeuille (
   libelle              TEXT,
   created_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  KEY idx_mvt_portefeuille (portefeuille_id),
+  KEY idx_mvt_utilisateur (utilisateur_id),
   KEY idx_mvt_created_at   (created_at),
-  CONSTRAINT fk_mvt_portefeuille FOREIGN KEY (portefeuille_id)     REFERENCES portefeuilles(id),
+  CONSTRAINT fk_mvt_utilisateur FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id),
   CONSTRAINT fk_mvt_type         FOREIGN KEY (type_transaction_id) REFERENCES ref_types_transaction(id),
   CONSTRAINT fk_mvt_commande     FOREIGN KEY (commande_id)         REFERENCES commandes(id),
   CONSTRAINT fk_mvt_code         FOREIGN KEY (code_id)             REFERENCES codes_portefeuille(id)
