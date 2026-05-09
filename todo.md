@@ -5,7 +5,7 @@
 
 - [ ] **Base de données (SQL)**
     - [ x ] Créer les tables 
-    - [ ] Exporter le script SQL initial. 
+    - [ x ] Exporter le script SQL initial. 
 - [ ] **Vues (HTML/CSS)**
     - [ ] Créer les maquettes statiques du Front Office. 
     - [ ] Créer les maquettes statiques du Back Office. 
