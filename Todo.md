@@ -4,7 +4,7 @@
 *Objectif : Mise en place de l'environnement et du visuel.*
 
 - [ ] **Base de données (SQL)**
-    - [ x ] Créer les tables : `utilisateurs`, `regimes`, `activités`, `codes_porte_monnaie`, `objectifs`. 
+    - [ x ] Créer les tables 
     - [ x ] Exporter le script SQL initial. 
 - [ ] **Vues (HTML/CSS)**
     - [ ] Créer les maquettes statiques du Front Office. 
