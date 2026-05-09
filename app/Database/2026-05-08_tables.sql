@@ -1,6 +1,7 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP DATABASE IF EXISTS regime_alimentaire;
 CREATE DATABASE IF NOT EXISTS regime_alimentaire
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
@@ -12,7 +13,7 @@ USE regime_alimentaire;
 --  TABLES DE RÉFÉRENCE (ref_*)
 -- ============================================================
 CREATE TABLE ref_genres (
-  id      TINYINT      NOT NULL AUTO_INCREMENT,
+  id      INT      NOT NULL AUTO_INCREMENT,
   libelle VARCHAR(20)  NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY uq_genres_libelle (libelle)
@@ -22,7 +23,7 @@ CREATE TABLE ref_genres (
 --  ref_objectifs
 -- ------------------------------------------------------------
 CREATE TABLE ref_objectifs (
-  id          TINYINT      NOT NULL AUTO_INCREMENT,
+  id          INT      NOT NULL AUTO_INCREMENT,
   libelle     VARCHAR(50)  NOT NULL,
   description TEXT,
   PRIMARY KEY (id),
@@ -33,7 +34,7 @@ CREATE TABLE ref_objectifs (
 --  ref_statuts_commande
 -- ------------------------------------------------------------
 CREATE TABLE ref_statuts_commande (
-  id          TINYINT      NOT NULL AUTO_INCREMENT,
+  id          INT      NOT NULL AUTO_INCREMENT,
   libelle     VARCHAR(30)  NOT NULL,
   description TEXT,
   PRIMARY KEY (id),
@@ -44,7 +45,7 @@ CREATE TABLE ref_statuts_commande (
 --  ref_types_transaction
 -- ------------------------------------------------------------
 CREATE TABLE ref_types_transaction (
-  id      TINYINT     NOT NULL AUTO_INCREMENT,
+  id      INT     NOT NULL AUTO_INCREMENT,
   libelle VARCHAR(30) NOT NULL,
   sens    ENUM('CREDIT','DEBIT') NOT NULL COMMENT 'CREDIT = entrée d\'argent, DEBIT = sortie',
   PRIMARY KEY (id),
@@ -55,7 +56,7 @@ CREATE TABLE ref_types_transaction (
 --  ref_categories_activite
 -- ------------------------------------------------------------
 CREATE TABLE ref_categories_activite (
-  id          TINYINT     NOT NULL AUTO_INCREMENT,
+  id          INT     NOT NULL AUTO_INCREMENT,
   libelle     VARCHAR(50) NOT NULL,
   description TEXT,
   PRIMARY KEY (id),
@@ -76,9 +77,9 @@ CREATE TABLE utilisateurs (
   prenom            VARCHAR(100) NOT NULL,
   email             VARCHAR(150) NOT NULL,
   mot_de_passe_hash VARCHAR(255) NOT NULL COMMENT 'Hash bcrypt ou argon2',
-  genre_id          TINYINT      NOT NULL,
+  genre_id          INT      NOT NULL,
   date_naissance    DATE,
-  is_active         TINYINT(1)   NOT NULL DEFAULT 1,
+  is_active         INT(1)   NOT NULL DEFAULT 1,
   created_at        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -97,7 +98,7 @@ CREATE TABLE profils_sante (
   poids_kg        DECIMAL(5,2) NOT NULL COMMENT 'En kilogrammes',
   imc             DECIMAL(5,2)
                   COMMENT 'Calculé automatiquement par MySQL',
-  objectif_id     TINYINT  NOT NULL,
+  objectif_id     INT  NOT NULL,
   date_mesure     DATE     NOT NULL DEFAULT (CURRENT_DATE),
   created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -116,7 +117,7 @@ CREATE TABLE historique_imc (
   poids_kg       DECIMAL(5,2) NOT NULL,
   taille_cm      DECIMAL(5,2) NOT NULL,
   imc            DECIMAL(5,2) NOT NULL,
-  objectif_id    TINYINT  NOT NULL,
+  objectif_id    INT  NOT NULL,
   date_mesure    DATE     NOT NULL,
   created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -135,7 +136,7 @@ CREATE TABLE abonnements_gold (
   montant_paye   DECIMAL(10,2) NOT NULL,
   date_debut     DATE     NOT NULL,
   date_fin       DATE,
-  is_actif       TINYINT(1) NOT NULL DEFAULT 1,
+  is_actif       INT(1) NOT NULL DEFAULT 1,
   created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   KEY idx_gold_utilisateur (utilisateur_id),
@@ -167,7 +168,7 @@ CREATE TABLE codes_portefeuille (
   id             INT      NOT NULL AUTO_INCREMENT,
   code           VARCHAR(32)  NOT NULL,
   montant        DECIMAL(10,2) NOT NULL,
-  is_utilise     TINYINT(1)   NOT NULL DEFAULT 0,
+  is_utilise     INT(1)   NOT NULL DEFAULT 0,
   utilise_par_id INT     ,
   utilise_le     TIMESTAMP    NULL,
   expire_le      TIMESTAMP    NULL,
@@ -185,7 +186,7 @@ CREATE TABLE codes_portefeuille (
 CREATE TABLE mouvements_portefeuille (
   id                   INT      NOT NULL AUTO_INCREMENT,
   utilisateur_id       INT      NOT NULL,
-  type_transaction_id  TINYINT  NOT NULL,
+  type_transaction_id  INT  NOT NULL,
   commande_id          INT     ,
   code_id              INT     ,
   montant              DECIMAL(10,2) NOT NULL,
@@ -213,7 +214,7 @@ CREATE TABLE regimes (
   id           INT      NOT NULL AUTO_INCREMENT,
   nom          VARCHAR(150) NOT NULL,
   description  TEXT,
-  is_actif     TINYINT(1)   NOT NULL DEFAULT 1,
+  is_actif     INT(1)   NOT NULL DEFAULT 1,
   created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
@@ -229,7 +230,7 @@ CREATE TABLE tarifs_regime (
   duree_jours      SMALLINT NOT NULL,
   prix             DECIMAL(10,2) NOT NULL,
   variation_poids_kg DECIMAL(5,2) NOT NULL COMMENT 'Positif = prise, négatif = perte',
-  is_actif         TINYINT(1)   NOT NULL DEFAULT 1,
+  is_actif         INT(1)   NOT NULL DEFAULT 1,
   PRIMARY KEY (id),
   UNIQUE KEY uq_tarif_regime_duree (regime_id, duree_jours),
   CONSTRAINT fk_tarif_regime FOREIGN KEY (regime_id) REFERENCES regimes(id) ON DELETE CASCADE
@@ -240,12 +241,12 @@ CREATE TABLE tarifs_regime (
 -- ------------------------------------------------------------
 CREATE TABLE activites_sportives (
   id           INT      NOT NULL AUTO_INCREMENT,
-  categorie_id TINYINT  NOT NULL,
+  categorie_id INT  NOT NULL,
   nom          VARCHAR(150) NOT NULL,
   description  TEXT,
   duree_jours  SMALLINT NOT NULL,
   prix         DECIMAL(10,2) NOT NULL,
-  is_actif     TINYINT(1)   NOT NULL DEFAULT 1,
+  is_actif     INT(1)   NOT NULL DEFAULT 1,
   created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   KEY idx_activite_categorie (categorie_id),
@@ -260,7 +261,7 @@ CREATE TABLE nourritures (
   id           INT      NOT NULL AUTO_INCREMENT,
   nom          VARCHAR(150) NOT NULL,
   description  TEXT,
-  is_actif     TINYINT(1)   NOT NULL DEFAULT 1,
+  is_actif     INT(1)   NOT NULL DEFAULT 1,
   created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 );
@@ -313,12 +314,12 @@ CREATE TABLE commandes (
   utilisateur_id       INT      NOT NULL,
   tarif_regime_id      INT      NOT NULL,
   activite_id          INT     ,
-  statut_id            TINYINT  NOT NULL,
+  statut_id            INT  NOT NULL,
   sous_total           DECIMAL(10,2) NOT NULL COMMENT 'Avant remise',
   taux_remise          DECIMAL(5,2)  NOT NULL DEFAULT 0.00 COMMENT 'En % (ex: 15.00)',
   montant_remise       DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   total_ttc            DECIMAL(10,2) NOT NULL COMMENT 'Montant final payé',
-  paye_via_portefeuille TINYINT(1)  NOT NULL DEFAULT 0,
+  paye_via_portefeuille INT(1)  NOT NULL DEFAULT 0,
   created_at           TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at           TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -337,7 +338,7 @@ CREATE TABLE commandes (
 CREATE TABLE suivi_commandes (
   id          INT      NOT NULL AUTO_INCREMENT,
   commande_id INT      NOT NULL,
-  statut_id   TINYINT  NOT NULL,
+  statut_id   INT  NOT NULL,
   commentaire TEXT,
   created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),

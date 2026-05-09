@@ -1,4 +1,7 @@
 -- Vue tableau de bord : profil complet utilisateur
+
+USE regime_alimentaire;
+
 CREATE OR REPLACE VIEW v_profils_utilisateurs AS
 SELECT
   u.id,
