@@ -70,7 +70,7 @@
     <!-- Mes Ingrédients -->
     <section class="card card--full" id="ingredients">
       <div class="card-header">
-        <h2 class="section-title">Mes Ingrédients</h2>
+        <h2 class="section-title">Regime poulet</h2>
         <button class="btn-add">
           Changer de regime
         </button>
