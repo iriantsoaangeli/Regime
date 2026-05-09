@@ -12,7 +12,7 @@
 <body>
 
     <!-- ── NAVBAR ─────────────────────────────────────────────── -->
-    <header class="navbar">
+    <!-- <header class="navbar">
         <div class="navbar__brand">
             <div class="brand-icon">🍎</div>
             <span class="brand-name">HealthyLife</span>
@@ -60,7 +60,8 @@
                 Marie Dupont
             </div>
         </div>
-    </header>
+    </header> -->
+    <?= $this->include('templates/header-admin') ?>
 
     <!-- ── MAIN ───────────────────────────────────────────────── -->
     <main class="main">
@@ -282,7 +283,7 @@
     </main>
 
     <!-- ── FOOTER ─────────────────────────────────────────────── -->
-    <footer class="footer">
+    <!-- <footer class="footer">
         <div class="footer__inner">
             <div class="footer__col footer__col--brand">
                 <div class="footer__brand">
@@ -330,8 +331,8 @@
         <div class="footer__bottom">
             <p>© 2026 HealthyLife. Tous droits réservés.</p>
         </div>
-    </footer>
-
+    </footer> -->
+    <?= $this->include('templates/footer-admin') ?>
 </body>
 
 </html>
