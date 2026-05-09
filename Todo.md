@@ -3,9 +3,21 @@
 ## 🟢 Phase 1 : La Fondation (Facile)
 *Objectif : Mise en place de l'environnement et du visuel.*
 
-- [ ] **Base de données (SQL)**
-    - [ x ] Créer les tables 
-    - [ x ] Exporter le script SQL initial. 
+- [X] **Base de données (SQL)**
+    - [X] Créer les tables 
+      - [X] tables de references
+        - [X] ref_genres, ref_objectifs, ref_statuts_commande, ref_types_transaction, ref_categories_activite
+      - [X] tables des utilisateurs
+        - [X] utilisateurs, profils_sante, historique_imc, abonnement_gold
+      - [X] tables des portefeuilles
+        - [X] portefeuilles, codes_portefeuille, mouvements_portefeuille
+      - [X] tables des regimes et des activites
+        - [X] regimes, tarifs_regimes, activites_sportives, nourritures, regime_nourritures,
+      - [X] tables des objectifs et leurs relations
+        - [X] objectif_regime, objectif_activites
+      - [X] tables des commandes
+        - [X] commandes, suivi_commandes
+    - [X] Exporter le script SQL initial. 
 - [ ] **Vues (HTML/CSS)**
     - [ ] Créer les maquettes statiques du Front Office.
       - [ x ] Accueil 
