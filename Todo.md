@@ -9,6 +9,8 @@
 - [ ] **Vues (HTML/CSS)**
     - [ ] Créer les maquettes statiques du Front Office.
       - [ x ] Accueil 
+      - [ x ] Regime 
+      - [ x ] Sports
     - [ ] Créer les maquettes statiques du Back Office. 
 - [ ] **Données de test**
     - [ x ] Insérer manuellement 5 utilisateurs. 
