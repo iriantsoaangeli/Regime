@@ -62,11 +62,32 @@
       - [x] ProfilSante.php
       - [x] HistoriqueImc.php
       - [x] AbonnementGold.php
+    - [x] Etape 3 : Portefeille
+      - [x] Portefeuille.php
+      - [x] CodePortefeuille.php
+      - [x] MouvementPortefeuille.php
+    - [ ] Etape 4 : Regimes & nourritures
+      - [x] Regime.php
+      - [x] Nourriture.php
+      - [x] TarifRegime.php
+      - [ ] RegimeNourriture.php
+      - [ ] ObjectifRegime.php
+      - [ ] ObjectifActivite.php
+    - [ ] Etape 5 : Activites sportives
+      - [ ] Activite.php
 - [x] **Creation des Controllers**
     - [x] Etape 1 : Controllers utilisateurs & profils
       - [x] UtilisateurController.php
       - [x] ProfilSanteController.php
       - [x] AbonnementGoldController.php
+    - [x] Etape 2 : Controllers portefeuille
+      - [x] CodePortefeuilleController.php
+    - [x] Etape 3 : Controllers regimes et nourritures
+      - [x] RegimeController.php
+      - [x] NourritureController.php
+      - [x] TarifRegimeController.php
+    - [ ] Etape 4 : Activites sportives
+      - [ ] ActiviteController.php
 
 ## 🟠 Phase 3 : Logique d'Accès & Sécurité (Intermédiaire)
 *Objectif : Gérer les comptes et les transactions simples.*
