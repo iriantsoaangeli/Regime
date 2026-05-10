@@ -66,15 +66,15 @@
       - [x] Portefeuille.php
       - [x] CodePortefeuille.php
       - [x] MouvementPortefeuille.php
-    - [ ] Etape 4 : Regimes & nourritures
+    - [x] Etape 4 : Regimes & nourritures
       - [x] Regime.php
       - [x] Nourriture.php
       - [x] TarifRegime.php
-      - [ ] RegimeNourriture.php
-      - [ ] ObjectifRegime.php
-      - [ ] ObjectifActivite.php
-    - [ ] Etape 5 : Activites sportives
-      - [ ] Activite.php
+      - [x] RegimeNourriture.php
+      - [x] ObjectifRegime.php
+      - [x] ObjectifActivite.php
+    - [x] Etape 5 : Activites sportives
+      - [x] Activite.php
 - [x] **Creation des Controllers**
     - [x] Etape 1 : Controllers utilisateurs & profils
       - [x] UtilisateurController.php
@@ -86,8 +86,8 @@
       - [x] RegimeController.php
       - [x] NourritureController.php
       - [x] TarifRegimeController.php
-    - [ ] Etape 4 : Activites sportives
-      - [ ] ActiviteController.php
+    - [x] Etape 4 : Activites sportives
+      - [x] ActiviteController.php
 
 ## 🟠 Phase 3 : Logique d'Accès & Sécurité (Intermédiaire)
 *Objectif : Gérer les comptes et les transactions simples.*
