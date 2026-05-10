@@ -4,6 +4,8 @@ namespace App\Controllers\Utilisateurs;
 
 use App\Controllers\BaseController;
 use App\Models\Utilisateurs\AbonnementGold;
+use App\Models\Portefeuilles\Portefeuille;
+use App\Models\Portefeuilles\MouvementPortefeuille;
 
 class AbonnementGoldController extends BaseController
 {
@@ -25,15 +27,16 @@ class AbonnementGoldController extends BaseController
         $data['date_debut'] = date('Y-m-d');
         $data['is_actif'] = 1;
         
+        // fin static : modifiable
         if (empty($data['date_fin'])) {
-            $data['date_fin'] = date('Y-m-d', strtotime('+30 days')); // Default: 30 jours
+            $data['date_fin'] = date('Y-m-d', strtotime('+30 days'));
         }
         
-        // Logique métier de débit portefeuille : Abonnement Gold coûte généralement 50000 (exemple)
+        // Logique métier de débit portefeuille si solde insuffisant val par defaut
         $montantAbonnement = !empty($data['montant_paye']) ? $data['montant_paye'] : 50000.00;
         $data['montant_paye'] = $montantAbonnement;
 
-        $portefeuilleModel = new \App\Models\Portefeuilles\Portefeuille();
+        $portefeuilleModel = new Portefeuille();
         if (!$portefeuilleModel->soldeSuffisant($userId, $montantAbonnement)) {
             return redirect()->back()->with('error', 'Solde du portefeuille insuffisant pour souscrire à l\'abonnement Gold');
         }
@@ -47,10 +50,10 @@ class AbonnementGoldController extends BaseController
         $soldeApres = $soldeAvant - $montantAbonnement;
 
         // Enregistrer le mouvement (Achat / ID 2)
-        $mvtModel = new \App\Models\Portefeuilles\MouvementPortefeuille();
+        $mvtModel = new MouvementPortefeuille();
         $mvtModel->insert([
             'utilisateur_id'      => $userId,
-            'type_transaction_id' => 2, // Achat
+            'type_transaction_id' => 2,
             'montant'             => $montantAbonnement,
             'solde_avant'         => $soldeAvant,
             'solde_apres'         => $soldeApres,
