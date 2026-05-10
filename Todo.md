@@ -50,6 +50,15 @@
 - [ ] **Formulaires Inscription (User)**
     - [ ] Étape 1 : Infos personnelles. 
     - [ ] Étape 2 : Infos santé (Poids, Taille). 
+- [x] **Creation des modeles**
+    - [x] Etape 1 : Modeles des references :
+      - [x] Genre.php
+      - [x] Objectif.php
+      - [x] StatutCommande.php
+      - [x] TypeTransaction.php
+      - [x] CategorieActivite.php
+- [ ] **Creation des Controllers**
+    - [ ] Etape 1 : 
 
 ## 🟠 Phase 3 : Logique d'Accès & Sécurité (Intermédiaire)
 *Objectif : Gérer les comptes et les transactions simples.*
