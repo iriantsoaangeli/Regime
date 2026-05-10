@@ -29,8 +29,33 @@ class AbonnementGoldController extends BaseController
             $data['date_fin'] = date('Y-m-d', strtotime('+30 days')); // Default: 30 jours
         }
         
-        // Logique métier de débit portefeuille serait appelée ici
-        // ...
+        // Logique métier de débit portefeuille : Abonnement Gold coûte généralement 50000 (exemple)
+        $montantAbonnement = !empty($data['montant_paye']) ? $data['montant_paye'] : 50000.00;
+        $data['montant_paye'] = $montantAbonnement;
+
+        $portefeuilleModel = new \App\Models\Portefeuilles\Portefeuille();
+        if (!$portefeuilleModel->soldeSuffisant($userId, $montantAbonnement)) {
+            return redirect()->back()->with('error', 'Solde du portefeuille insuffisant pour souscrire à l\'abonnement Gold');
+        }
+
+        // Récupérer solde
+        $portefeuille = $portefeuilleModel->where('utilisateur_id', $userId)->first();
+        $soldeAvant = $portefeuille ? $portefeuille['solde'] : 0.00;
+
+        // Débit
+        $portefeuilleModel->debiter($userId, $montantAbonnement);
+        $soldeApres = $soldeAvant - $montantAbonnement;
+
+        // Enregistrer le mouvement (Achat / ID 2)
+        $mvtModel = new \App\Models\Portefeuilles\MouvementPortefeuille();
+        $mvtModel->insert([
+            'utilisateur_id'      => $userId,
+            'type_transaction_id' => 2, // Achat
+            'montant'             => $montantAbonnement,
+            'solde_avant'         => $soldeAvant,
+            'solde_apres'         => $soldeApres,
+            'libelle'             => 'Souscription abonnement Gold'
+        ]);
         
         $model->insert($data);
         

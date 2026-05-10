@@ -75,6 +75,9 @@
       - [x] ObjectifActivite.php
     - [x] Etape 5 : Activites sportives
       - [x] Activite.php
+    - [x] Etape 6 : Commandes et Suivis
+      - [x] Commande.php
+      - [x] SuiviCommande.php
 - [x] **Creation des Controllers**
     - [x] Etape 1 : Controllers utilisateurs & profils
       - [x] UtilisateurController.php
@@ -88,6 +91,8 @@
       - [x] TarifRegimeController.php
     - [x] Etape 4 : Activites sportives
       - [x] ActiviteController.php
+    - [x] Etape 5 : Commandes
+      - [x] CommandeController.php
 
 ## 🟠 Phase 3 : Logique d'Accès & Sécurité (Intermédiaire)
 *Objectif : Gérer les comptes et les transactions simples.*
