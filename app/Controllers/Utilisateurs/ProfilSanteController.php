@@ -3,12 +3,14 @@
 namespace App\Controllers\Utilisateurs;
 
 use App\Controllers\BaseController;
+use App\Models\Utilisateurs\ProfilSante;
+use App\Models\Utilisateurs\HistoriqueImc;
 
 class ProfilSanteController extends BaseController
 {
     public function show($userId)
     {
-        $model = new \App\Models\Utilisateurs\ProfilSante();
+        $model = new ProfilSante();
         $profil = $model->where('utilisateur_id', $userId)->first();
         
         return view('profil-sante', ['profil' => $profil]);
@@ -16,8 +18,8 @@ class ProfilSanteController extends BaseController
 
     public function store($userId)
     {
-        $model = new \App\Models\Utilisateurs\ProfilSante();
-        $histModel = new \App\Models\Utilisateurs\HistoriqueImc();
+        $model = new ProfilSante();
+        $histModel = new HistoriqueImc();
         
         $data = $this->request->getPost();
         $data['utilisateur_id'] = $userId;
@@ -44,8 +46,8 @@ class ProfilSanteController extends BaseController
 
     public function update($userId)
     {
-        $model = new \App\Models\Utilisateurs\ProfilSante();
-        $histModel = new \App\Models\Utilisateurs\HistoriqueImc();
+        $model = new ProfilSante();
+        $histModel = new HistoriqueImc();
         
         $profil = $model->where('utilisateur_id', $userId)->first();
         if (!$profil) {

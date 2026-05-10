@@ -3,12 +3,13 @@
 namespace App\Controllers\Utilisateurs;
 
 use App\Controllers\BaseController;
+use App\Models\Utilisateurs\Utilisateur;
 
 class UtilisateurController extends BaseController
 {
     public function index()
     {
-        $model = new \App\Models\Utilisateurs\Utilisateur();
+        $model = new Utilisateur();
         $data['utilisateurs'] = $model->findAll();
         
         return view('admin-utilisateurs', $data); // Vue à créer pour le back-office
@@ -16,7 +17,7 @@ class UtilisateurController extends BaseController
 
     public function show($id)
     {
-        $model = new \App\Models\Utilisateurs\Utilisateur();
+        $model = new Utilisateur();
         $data['utilisateur'] = $model->find($id);
 
         return view('utilisateur-detail', $data);
@@ -25,7 +26,7 @@ class UtilisateurController extends BaseController
     public function store()
     {
         // inscription front office
-        $model = new \App\Models\Utilisateurs\Utilisateur();
+        $model = new Utilisateur();
         $data = $this->request->getPost();
         
         // Hachage du mot de passe
@@ -42,7 +43,7 @@ class UtilisateurController extends BaseController
 
     public function update($id)
     {
-        $model = new \App\Models\Utilisateurs\Utilisateur();
+        $model = new Utilisateur();
         $data = $this->request->getPost();
         
         // Mise à jour du mot de passe si renseigné
@@ -58,7 +59,7 @@ class UtilisateurController extends BaseController
 
     public function destroy($id)
     {
-        $model = new \App\Models\Utilisateurs\Utilisateur();
+        $model = new Utilisateur();
         // Désactivation logique ("soft delete" manuel)
         $model->update($id, ['is_active' => 0]);
         

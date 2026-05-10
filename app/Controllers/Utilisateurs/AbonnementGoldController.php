@@ -3,12 +3,13 @@
 namespace App\Controllers\Utilisateurs;
 
 use App\Controllers\BaseController;
+use App\Models\Utilisateurs\AbonnementGold;
 
 class AbonnementGoldController extends BaseController
 {
     public function index($userId)
     {
-        $model = new \App\Models\Utilisateurs\AbonnementGold();
+        $model = new AbonnementGold();
         $abonnements = $model->where('utilisateur_id', $userId)->findAll();
         
         return view('abonnement-historique', ['abonnements' => $abonnements]);
@@ -16,7 +17,7 @@ class AbonnementGoldController extends BaseController
 
     public function store($userId)
     {
-        $model = new \App\Models\Utilisateurs\AbonnementGold();
+        $model = new AbonnementGold();
         $data = $this->request->getPost();
         
         // Définir les valeurs par défaut de l'abonnement
@@ -38,7 +39,7 @@ class AbonnementGoldController extends BaseController
 
     public function destroy($id)
     {
-        $model = new \App\Models\Utilisateurs\AbonnementGold();
+        $model = new AbonnementGold();
         // On désactive l'abonnement
         $model->update($id, ['is_actif' => 0]);
         
