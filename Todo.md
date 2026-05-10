@@ -57,8 +57,16 @@
       - [x] StatutCommande.php
       - [x] TypeTransaction.php
       - [x] CategorieActivite.php
-- [ ] **Creation des Controllers**
-    - [ ] Etape 1 : 
+    - [x] Etape 2 : Modeles utilisateurs & profils
+      - [x] Utilisateur.php
+      - [x] ProfilSante.php
+      - [x] HistoriqueImc.php
+      - [x] AbonnementGold.php
+- [x] **Creation des Controllers**
+    - [x] Etape 1 : Controllers utilisateurs & profils
+      - [x] UtilisateurController.php
+      - [x] ProfilSanteController.php
+      - [x] AbonnementGoldController.php
 
 ## 🟠 Phase 3 : Logique d'Accès & Sécurité (Intermédiaire)
 *Objectif : Gérer les comptes et les transactions simples.*
