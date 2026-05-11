@@ -3,55 +3,45 @@
 ## 🟢 Phase 1 : La Fondation (Facile)
 *Objectif : Mise en place de l'environnement et du visuel.*
 
-- [X] **Base de données (SQL)**
-    - [X] Créer les tables 
-      - [X] tables de references
-        - [X] ref_genres, ref_objectifs, ref_statuts_commande, ref_types_transaction, ref_categories_activite
-      - [X] tables des utilisateurs
-        - [X] utilisateurs, profils_sante, historique_imc, abonnement_gold
-      - [X] tables des portefeuilles
-        - [X] portefeuilles, codes_portefeuille, mouvements_portefeuille
-      - [X] tables des regimes et des activites
-        - [X] regimes, tarifs_regimes, activites_sportives, nourritures, regime_nourritures,
-      - [X] tables des objectifs et leurs relations
-        - [X] objectif_regime, objectif_activites
-      - [X] tables des commandes
-        - [X] commandes, suivi_commandes
-    - [X] Exporter le script SQL initial. 
+- [x] **Base de données (SQL)**
+    - [x] Etape 1 : Créer les tables 
+      - [x] Tables de references (ref_genres, ref_objectifs, ref_statuts_commande, ref_types_transaction, ref_categories_activite)
+      - [x] Tables des utilisateurs (utilisateurs, profils_sante, historique_imc, abonnement_gold)
+      - [x] Tables des portefeuilles (portefeuilles, codes_portefeuille, mouvements_portefeuille)
+      - [x] Tables des regimes et des activites (regimes, tarifs_regimes, activites_sportives, nourritures, regime_nourritures)
+      - [x] Tables des objectifs et leurs relations (objectif_regime, objectif_activites)
+      - [x] Tables des commandes (commandes, suivi_commandes)
+    - [x] Etape 2 : Exporter le script SQL initial (2026-05-08_tables.sql)
+
 - [ ] **Vues (HTML/CSS)**
-    - [ ] Créer les maquettes statiques du Front Office.
-      - [x] Accueil 
-      - [x] Regime 
-      - [x] Sports
-      - [ ] Accueil sans compte
-      - [ ] Login
-      - [ ] Inscription
-    - [ ] Créer les maquettes statiques du Back Office. 
-      - [x] Dashboard
-      - [x] Liste des regimes
-      - [ ] Editer regimer
-      - [ ] Creer regime
-      - [x] Liste des activites sportives
-      - [ ] Creation activite
-      - [ ] Modif activite  
-- [ ] **Données de test**
-    - [x] Insérer manuellement 5 utilisateurs. 
-    - [x] Insérer 5 régimes et 5 sports. 
-    - [x] Insérer 15 codes de recharge. 
+    - [ ] Etape 1 : Créer les maquettes du Front Office (Templates & Pages)
+      - [x] templates/header.php & footer.php (à créer/vérifier)
+      - [x] index-front.php (Accueil)
+      - [x] regime.php (Détail/Liste Régime)
+      - [x] sport.php (Détail/Liste Sports)
+      - [ ] accueil-invite.php (Accueil sans compte)
+      - [ ] login.php (Login)
+      - [ ] register.php (Inscription)
+    - [ ] Etape 2 : Créer les maquettes du Back Office (Admin)
+      - [x] dashboard.php (Tableau de bord)
+      - [x] admin-regime.php (Liste des regimes)
+      - [ ] admin-regime-edit.php (Editer regime)
+      - [ ] admin-regime-create.php (Creer regime)
+      - [x] admin-sport.php (Liste des activites sportives)
+      - [ ] admin-sport-create.php (Creation activite)
+      - [ ] admin-sport-edit.php (Modif activite)
 
-## 🟡 Phase 2 : Connectivité & CRUD (Moyenne)
-*Objectif : Rendre l'application dynamique.*
+- [x] **Données de test**
+    - [x] Etape 1 : Scripts de données
+      - [x] 2026-05-08_data.sql (ou seeders) avec 5 utilisateurs
+      - [x] Insérer 5 régimes et 5 sports
+      - [x] Insérer 15 codes de recharge
 
-- [ ] **Affichage Back-Office**
-    - [ ] Lister les données existantes (Régimes, Sports). 
-- [ ] **Formulaires CRUD (Admin)**
-    - [ ] Créer/Modifier/Supprimer des régimes (avec les % viande, poisson, volaille). 
-    - [ ] Créer/Modifier/Supprimer des activités sportives. 
-- [ ] **Formulaires Inscription (User)**
-    - [ ] Étape 1 : Infos personnelles. 
-    - [ ] Étape 2 : Infos santé (Poids, Taille). 
+## 🟡 Phase 2 : Modèles, Controllers & CRUD (Moyenne)
+*Objectif : Mettre en place le cœur dynamique MVC de l'application.*
+
 - [x] **Creation des modeles**
-    - [x] Etape 1 : Modeles des references :
+    - [x] Etape 1 : Modeles des references
       - [x] Genre.php
       - [x] Objectif.php
       - [x] StatutCommande.php
@@ -62,7 +52,7 @@
       - [x] ProfilSante.php
       - [x] HistoriqueImc.php
       - [x] AbonnementGold.php
-    - [x] Etape 3 : Portefeille
+    - [x] Etape 3 : Portefeuille
       - [x] Portefeuille.php
       - [x] CodePortefeuille.php
       - [x] MouvementPortefeuille.php
@@ -78,6 +68,7 @@
     - [x] Etape 6 : Commandes et Suivis
       - [x] Commande.php
       - [x] SuiviCommande.php
+
 - [x] **Creation des Controllers**
     - [x] Etape 1 : Controllers utilisateurs & profils
       - [x] UtilisateurController.php
@@ -94,34 +85,55 @@
     - [x] Etape 5 : Commandes
       - [x] CommandeController.php
 
-## 🟠 Phase 3 : Logique d'Accès & Sécurité (Intermédiaire)
-*Objectif : Gérer les comptes et les transactions simples.*
+- [x] **Affichage Back-Office & CRUD Admin**
+    - [x] Etape 1 : CRUD Régime
+      - [x] Lister les régimes (View + Controller action)
+      - [x] Créer un régime (Validation des % viande, poisson, volaille)
+      - [x] Modifier un régime 
+      - [x] Supprimer un régime
+    - [x] Etape 2 : CRUD Sports/Activités
+      - [x] Lister les disciplines sportives
+      - [x] Créer une activité
+      - [x] Modifier une activité
+      - [x] Supprimer une activité
 
-- [ ] **Authentification**
-    - [ ] Gestion du Login / Logout avec sessions PHP. 
-    - [ ] Sécuriser l'accès au Back-Office (Admin uniquement). 
-- [ ] **Porte-monnaie & Paiement**
-    - [ ] Logique de saisie et validation de code pour créditer le compte. 
-    - [ ] Logique d'achat de l'option "Gold". 
+## 🟠 Phase 3 : Logique métier (Intermédiaire)
+*Objectif : Gérer les inscriptions, comptes et l'argent.*
+
+- [ ] **Inscription Utilisateur (User)**
+    - [ ] Etape 1 : Formulaire d'inscription (Infos personnelles)
+    - [ ] Etape 2 : Informations de santé (Poids, Taille) pour le profil
+- [ ] **Authentification & Sécurité**
+    - [ ] Etape 1 : LoginController (Connexion / Déconnexion avec sessions PHP)
+    - [ ] Etape 2 : Sécurisation par Filtre/Middleware (Admin vs User)
+- [ ] **Porte-monnaie & Transactions**
+    - [ ] Etape 1 : Saisie de code de recharge (validation et crédit)
+    - [ ] Etape 2 : Achat et validation de l'abonnement "Gold"
 
 ## 🔴 Phase 4 : Algorithmes & Calculs (Avancée)
-*Objectif : Coder l'intelligence métier.*
+*Objectif : Coder l'intelligence métier de la plateforme.*
 
-- [ ] **Moteur de Santé**
-    - [ ] Calcul automatique de l'IMC ($IMC = poids / taille^2$). 
-- [ ] **Système de Suggestion**
-    - [ ] Algorithme de sélection régime + sport selon l'objectif choisi. 
-    - [ ] Calcul de la durée du programme pour atteindre l'objectif. 
-- [ ] **Gestion des Tarifs**
-    - [ ] Application de la remise de 15% pour les membres Gold sur les régimes. 
+- [x] **Moteurs de la plateforme**
+    - [x] Etape 1 : Calcul de santé
+      - [x] Calcul automatique de l'IMC (IMC = poids / taille²)
+      - [x] Mise à jour du profil de santé
+    - [x] Etape 2 : Matching (Système de Suggestion)
+      - [x] Algorithme de sélection régime + sport selon objectif de l'utilisateur
+      - [x] Calcul de la durée estimée pour atteindre le poids cible
+    - [ ] Etape 3 : Facturation / Tarifs
+      - [ ] Panier total et génération de la commande
+      - [ ] Application automatique de la remise 15% pour membres Gold
 
 ## 🟣 Phase 5 : Finalisation Technique (Technique)
 *Objectif : Rapports, graphiques et livraison.*
 
-- [ ] **Statistiques (Admin)**
-    - [ ] Générer des graphiques et tableaux croisés sur le Dashboard. 
-- [ ] **Export PDF**
-    - [ ] Générer le PDF récapitulatif pour l'utilisateur. 
-- [ ] **Livraison Finale**
-    - [ ] Merge final sur la branche `Main`. 
-    - [ ] Vérifier la présence de tous les fichiers (Git, SQL, Liste membres, Suivi tâches). 
+- [ ] **Fonctionnalités avancées**
+    - [ ] Etape 1 : Dashboard Admin
+      - [ ] Générer des graphiques des ventes/utilisateurs
+      - [ ] Tableaux récapitulatifs
+    - [ ] Etape 2 : Exports
+      - [ ] Générer le PDF récapitulatif du programme pour l'utilisateur
+- [ ] **Livraison**
+    - [ ] Vérifier les routes et Controller
+    - [ ] Tests fonctionnels (inscription, achat, matching)
+    - [ ] Merge final sur la branche `Main` 

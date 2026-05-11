@@ -80,22 +80,29 @@
       <div class="stat-card">
         <div class="stat-icon stat-icon--blue">👥</div>
         <div>
-          <div class="stat-val stat-val--blue">1 248</div>
-          <div class="stat-label">Utilisateurs actifs</div>
+          <div class="stat-val stat-val--blue"><?= esc($totalUsers) ?></div>
+          <div class="stat-label">Utilisateurs inscrits</div>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-icon stat-icon--yellow">⭐</div>
         <div>
-          <div class="stat-val stat-val--orange">186</div>
+          <div class="stat-val stat-val--orange"><?= esc($totalGold) ?></div>
           <div class="stat-label">Gold Members</div>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-icon stat-icon--green">📋</div>
         <div>
-          <div class="stat-val stat-val--green">12</div>
+          <div class="stat-val stat-val--green"><?= esc($totalRegimes) ?></div>
           <div class="stat-label">Régimes actifs</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-icon--blue" style="background-color: var(--primary-light);">💰</div>
+        <div>
+          <div class="stat-val stat-val--blue"><?= number_format($totalRevenue, 0, ',', ' ') ?> Ar</div>
+          <div class="stat-label">Chiffre d'affaires (Total)</div>
         </div>
       </div>
     </div>
@@ -136,14 +143,14 @@
         <div>
           <div class="gold-row gold-row--yellow">
             <span class="gold-row__label">⭐ Gold Members</span>
-            <span class="gold-row__val">186</span>
+            <span class="gold-row__val"><?= esc($totalGold) ?></span>
           </div>
           <div class="gold-row gold-row--blue">
             <span class="gold-row__label">👤 Standard</span>
-            <span class="gold-row__val">1 062</span>
+            <span class="gold-row__val"><?= esc($totalUsers - $totalGold) ?></span>
           </div>
           <p style="font-size:0.82rem;color:var(--text-secondary);padding:0 4px;margin-top:8px;">
-            14,9 % des utilisateurs sont Gold Members
+            <?= $totalUsers > 0 ? round(($totalGold / $totalUsers) * 100, 1) : 0 ?> % des utilisateurs sont Gold Members
           </p>
         </div>
       </div>
@@ -268,7 +275,7 @@
       data: {
         labels: ['Gold Members', 'Standard'],
         datasets: [{
-          data: [186, 1062],
+          data: [<?= esc($totalGold) ?>, <?= esc($totalUsers - $totalGold) ?>],
           backgroundColor: ['#eab308', '#3b82f6'],
           borderWidth: 0,
           hoverOffset: 6
