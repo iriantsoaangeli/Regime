@@ -11,46 +11,69 @@ class RegimeController extends BaseController
     public function index()
     {
         $model = new Regime();
-        $data['regimes'] = $model->findAll();
+        $data['regimes'] = $model->orderBy('id', 'DESC')->findAll();
         
-        return view('admin-regimes', $data);
+        return view('admin-regime', $data);
     }
 
-    public function show($id)
+    public function create()
+    {
+        if ($this->request->getMethod() === 'post') {
+            $model = new Regime();
+            $data = $this->request->getPost();
+            
+            // Total % validation
+            $totalPct = floatval($data['pct_viande']) + floatval($data['pct_poisson']) + floatval($data['pct_volaille']);
+            if ($totalPct != 100) {
+                return redirect()->back()->with('error', 'Le total des pourcentages (viande, poisson, volaille) doit être égal à 100.')->withInput();
+            }
+
+            $data['is_actif'] = isset($data['is_actif']) ? 1 : 0;
+            $model->insert($data);
+            
+            return redirect()->to('/admin/regime')->with('message', 'Régime ajouté avec succès.');
+        }
+
+        return view('admin-regime-form');
+    }
+
+    public function edit($id)
     {
         $model = new Regime();
+        
+        if ($this->request->getMethod() === 'post') {
+            $data = $this->request->getPost();
+            
+            // Total % validation
+            $totalPct = floatval($data['pct_viande']) + floatval($data['pct_poisson']) + floatval($data['pct_volaille']);
+            if ($totalPct != 100) {
+                return redirect()->back()->with('error', 'Le total des pourcentages (viande, poisson, volaille) doit être égal à 100.')->withInput();
+            }
+
+            $data['is_actif'] = isset($data['is_actif']) ? 1 : 0;
+            $model->update($id, $data);
+            
+            return redirect()->to('/admin/regime')->with('message', 'Régime mis à jour avec succès.');
+        }
+
         $data['regime'] = $model->find($id);
-        
-        return view('regime-detail', $data);
-    }
+        if (!$data['regime']) {
+            return redirect()->to('/admin/regime')->with('error', 'Régime introuvable.');
+        }
 
-    public function store()
-    {
-        $model = new Regime();
-        $data = $this->request->getPost();
-        $data['is_actif'] = 1;
-        $model->insert($data);
-        
-        return redirect()->back()->with('message', 'Régime créé');
-    }
-
-    public function update($id)
-    {
-        $model = new Regime();
-        $data = $this->request->getPost();
-        $model->update($id, $data);
-        
-        return redirect()->back()->with('message', 'Régime mis à jour');
+        return view('admin-regime-form', $data);
     }
 
     public function destroy($id)
     {
         $model = new Regime();
+        // Instead of hard delete, we just deactivate
         $model->update($id, ['is_actif' => 0]);
         
-        return redirect()->to('/admin/regimes')->with('message', 'Régime désactivé');
+        return redirect()->to('/admin/regime')->with('message', 'Régime désactivé avec succès.');
     }
-    // filtre et affichage des regimes par objectif
+    
+    // filtre et affichage des regimes par objectif (pour le front)
     public function parObjectif($objectifId)
     {
         $objectifRegimeModel = new ObjectifRegime();

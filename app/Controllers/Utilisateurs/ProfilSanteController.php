@@ -50,14 +50,12 @@ class ProfilSanteController extends BaseController
         $histModel = new HistoriqueImc();
         
         $profil = $model->where('utilisateur_id', $userId)->first();
-        if (!$profil) {
-            return redirect()->back()->with('error', 'Profil santé introuvable');
-        }
 
         $data = $this->request->getPost();
-        $poids = $data['poids_kg'] ?? $profil['poids_kg'];
-        $taille = $data['taille_cm'] ?? $profil['taille_cm'];
-        $objectif = $data['objectif_id'] ?? $profil['objectif_id'];
+        // Fallbacks au cas où le profil existait déjà
+        $poids = $data['poids_kg'] ?? ($profil['poids_kg'] ?? 0);
+        $taille = $data['taille_cm'] ?? ($profil['taille_cm'] ?? 0);
+        $objectif = $data['objectif_id'] ?? ($profil['objectif_id'] ?? null);
         
         // Recalcul IMC
         $taille_m = floatval($taille) / 100;
@@ -71,12 +69,17 @@ class ProfilSanteController extends BaseController
             'date_mesure' => date('Y-m-d')
         ];
         
-        $model->update($profil['id'], $updateData);
+        if ($profil) {
+            $model->update($profil['id'], $updateData);
+        } else {
+            $updateData['utilisateur_id'] = $userId;
+            $model->insert($updateData);
+        }
         
         // Archivage de la nouvelle mesure
         $updateData['utilisateur_id'] = $userId;
         $histModel->insert($updateData);
         
-        return redirect()->back()->with('message', 'Profil santé mis à jour');
+        return redirect()->to('/mon-espace')->with('message', 'Profil santé mis à jour avec le nouveau calcul IMC');
     }
 }

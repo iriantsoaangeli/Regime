@@ -4,43 +4,58 @@ namespace App\Controllers\Activites;
 
 use App\Controllers\BaseController;
 use App\Models\Activites\Activite;
-use App\Models\Activites\ObjectifActivite;
 
 class ActiviteController extends BaseController
 {
     public function index()
     {
         $model = new Activite();
-        $data['activites'] = $model->findAll();
+        $data['activites'] = $model->orderBy('id', 'DESC')->findAll();
         
-        return view('admin-activites', $data);
+        return view('admin-sport', $data);
     }
 
-    public function show($id)
+    public function create()
+    {
+        if ($this->request->getMethod() === 'post') {
+            $model = new Activite();
+            $data = $this->request->getPost();
+            
+            $data['is_actif'] = isset($data['is_actif']) ? 1 : 0;
+            $model->insert($data);
+            
+            return redirect()->to('/admin/sport')->with('message', 'Activité ajoutée avec succès.');
+        }
+
+        // Fetch categories
+        $categoryModel = new \App\Models\References\CategorieActivite();
+        $data['categories'] = $categoryModel->findAll();
+
+        return view('admin-sport-form', $data);
+    }
+
+    public function edit($id)
     {
         $model = new Activite();
+        
+        if ($this->request->getMethod() === 'post') {
+            $data = $this->request->getPost();
+            $data['is_actif'] = isset($data['is_actif']) ? 1 : 0;
+            $model->update($id, $data);
+            
+            return redirect()->to('/admin/sport')->with('message', 'Activité mise à jour avec succès.');
+        }
+
         $data['activite'] = $model->find($id);
-        
-        return view('activite-detail', $data);
-    }
+        if (!$data['activite']) {
+            return redirect()->to('/admin/sport')->with('error', 'Activité introuvable.');
+        }
 
-    public function store()
-    {
-        $model = new Activite();
-        $data = $this->request->getPost();
-        $data['is_actif'] = 1;
-        $model->insert($data);
-        
-        return redirect()->back()->with('message', 'Activité sportive créée');
-    }
+        // Fetch categories
+        $categoryModel = new \App\Models\References\CategorieActivite();
+        $data['categories'] = $categoryModel->findAll();
 
-    public function update($id)
-    {
-        $model = new Activite();
-        $data = $this->request->getPost();
-        $model->update($id, $data);
-        
-        return redirect()->back()->with('message', 'Activité sportive mise à jour');
+        return view('admin-sport-form', $data);
     }
 
     public function destroy($id)
@@ -48,19 +63,6 @@ class ActiviteController extends BaseController
         $model = new Activite();
         $model->update($id, ['is_actif' => 0]);
         
-        return redirect()->back()->with('message', 'Activité sportive désactivée');
-    }
-    // filtre et affichage des activites par objectif
-    public function parObjectif($objectifId)
-    {
-        $objectifActiviteModel = new ObjectifActivite();
-        $relations = $objectifActiviteModel->where('objectif_id', $objectifId)->findAll();
-        
-        $activitesIds = array_column($relations, 'activite_id');
-        
-        $model = new Activite();
-        $data['activites'] = !empty($activitesIds) ? $model->whereIn('id', $activitesIds)->where('is_actif', 1)->findAll() : [];
-        
-        return view('activites-par-objectif', $data);
+        return redirect()->to('/admin/sport')->with('message', 'Activité désactivée.');
     }
 }
