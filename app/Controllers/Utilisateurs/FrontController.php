@@ -147,8 +147,10 @@ class FrontController extends BaseController
 
         if (!$bestRegime) return [];
 
-        $activites = $activiteModel->where('is_actif', 1)
-                                   ->where('objectif_id', $objectif_id)
+        $activites = $activiteModel->select('activites_sportives.*')
+                                   ->join('objectif_activites', 'objectif_activites.activite_id = activites_sportives.id', 'inner')
+                                   ->where('activites_sportives.is_actif', 1)
+                                   ->where('objectif_activites.objectif_id', $objectif_id)
                                    ->findAll();
         $bestActivite = !empty($activites) ? $activites[array_rand($activites)] : null;
 
