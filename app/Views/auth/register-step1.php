@@ -27,6 +27,16 @@
                 </div>
             <?php endif; ?>
 
+            <?php if (session()->has('errors')): ?>
+                <div class="alert alert-error">
+                    <ul style="margin: 0; padding-left: 20px;">
+                    <?php foreach (session('errors') as $err): ?>
+                        <li><?= esc($err) ?></li>
+                    <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
             <form method="POST" action="<?= url_to('register.step1.submit') ?>" class="auth-form">
                 <?= csrf_field() ?>
 
@@ -105,7 +115,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 20px;
@@ -117,38 +127,39 @@
         }
 
         .auth-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
             padding: 40px;
         }
 
         .auth-title {
             text-align: center;
-            color: #667eea;
+            color: var(--green);
             margin: 0 0 5px 0;
             font-size: 28px;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
         .auth-subtitle {
             text-align: center;
-            color: #666;
+            color: var(--text-secondary);
             margin: 0 0 20px 0;
             font-size: 14px;
         }
 
         .progress-bar {
-            height: 4px;
-            background: #eee;
-            border-radius: 2px;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
             margin-bottom: 30px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: var(--green);
             transition: width 0.3s ease;
         }
 
@@ -172,48 +183,49 @@
 
         .form-label {
             font-weight: 600;
-            color: #333;
+            color: var(--text-primary);
             font-size: 14px;
         }
 
         .form-input {
             padding: 10px 14px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
             font-size: 14px;
             font-family: inherit;
-            transition: border-color 0.2s;
+            transition: border-color var(--transition);
+            background: #fff;
+            color: var(--text-primary);
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: var(--green);
         }
 
         .form-error {
-            color: #e74c3c;
+            color: #dc2626;
             font-size: 12px;
         }
 
         .btn {
             padding: 12px 16px;
             border: none;
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all var(--transition);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--green);
             color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            background: #16a34a;
         }
 
         .btn-full {
@@ -224,17 +236,17 @@
             text-align: center;
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border);
         }
 
         .auth-footer p {
-            color: #666;
+            color: var(--text-secondary);
             font-size: 14px;
             margin: 0;
         }
 
         .auth-footer a {
-            color: #667eea;
+            color: var(--green);
             text-decoration: none;
             font-weight: 600;
         }
@@ -245,15 +257,15 @@
 
         .alert {
             padding: 12px 16px;
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
             margin-bottom: 20px;
             font-size: 14px;
         }
 
         .alert-error {
-            background: #ffe0e0;
-            color: #c70039;
-            border: 1px solid #ffb3ba;
+            background: var(--red-light, #fee2e2);
+            color: var(--red, #ef4444);
+            border: 1px solid #fecaca;
         }
 
         @media (max-width: 600px) {
@@ -262,5 +274,7 @@
             }
         }
     </style>
+    
+    <script src="<?= base_url('assets/register.js') ?>"></script>
 </body>
 </html>
