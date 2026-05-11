@@ -15,8 +15,11 @@ class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (!session()->get('is_logged_in') || session()->get('is_admin')) {
+        if (!session()->get('is_logged_in')) {
             return redirect()->to('/login')->with('error', 'Vous devez être connecté pour accéder à cette page');
+        }
+        if (session()->get('is_admin')) {
+            return redirect()->to('/admin/dashboard')->with('error', 'Les administrateurs doivent utiliser le back-office');
         }
     }
 
