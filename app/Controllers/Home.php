@@ -4,9 +4,15 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-    public function index(): string
+    public function index()
     {
-        return view('index-front');
+        if (session()->get('is_logged_in')) {
+            if (session()->get('is_admin')) {
+                return redirect()->to('/admin/dashboard');
+            }
+            return redirect()->to('/mon-espace');
+        }
+        return view('accueil-invite');
     }
 
     public function regime(): string

@@ -24,6 +24,9 @@ class AuthController extends BaseController
      */
     public function loginPage()
     {
+        if (session()->get('is_logged_in')) {
+            return redirect()->to(session()->get('is_admin') ? '/admin/dashboard' : '/mon-espace');
+        }
         return view('auth/login');
     }
 
@@ -72,6 +75,10 @@ class AuthController extends BaseController
      */
     public function registerStep1()
     {
+        if (session()->get('is_logged_in')) {
+            return redirect()->to(session()->get('is_admin') ? '/admin/dashboard' : '/mon-espace');
+        }
+
         $genreModel = new Genre();
         $data['genres'] = $genreModel->findAll();
 
@@ -117,6 +124,10 @@ class AuthController extends BaseController
      */
     public function registerStep2()
     {
+        if (session()->get('is_logged_in')) {
+            return redirect()->to(session()->get('is_admin') ? '/admin/dashboard' : '/mon-espace');
+        }
+
         // Vérifier que l'étape 1 est complétée
         if (!session()->getTempdata('register_step1')) {
             return redirect()->to(url_to('register.step1'))
@@ -234,6 +245,9 @@ class AuthController extends BaseController
      */
     public function adminLoginPage()
     {
+        if (session()->get('is_logged_in') && session()->get('is_admin')) {
+            return redirect()->to('/admin/dashboard');
+        }
         return view('auth/admin-login');
     }
 
