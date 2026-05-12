@@ -71,108 +71,108 @@
 
   <!-- ── MAIN ───────────────────────────────────────────────── -->
   <main class="main">
+    <?php
+      $regimesData = $regimesData ?? [];
+      $objectif = $objectif ?? null;
+      $imc = $imc ?? null;
+      $calorieTarget = $calorieTarget ?? 1600;
+      $objectifType = $objectifType ?? null;
+    ?>
 
-    <!-- Bannière calorique -->
     <div class="calorie-banner">
       <div class="calorie-banner__left">
         <h2 class="calorie-banner__title">Objectif Calorique Journalier</h2>
-        <p class="calorie-banner__sub">Suivez votre apport calorique quotidien</p>
+        <p class="calorie-banner__sub">
+          <?php if ($objectif): ?>
+            Objectif : <?= esc($objectif['libelle'] ?? '') ?>
+          <?php elseif ($objectifType === 'gain'): ?>
+            Objectif : Gain de poids
+          <?php elseif ($objectifType === 'perte'): ?>
+            Objectif : Perte de poids
+          <?php else: ?>
+            Objectif : Non défini
+          <?php endif; ?>
+          <?php if ($imc !== null): ?>
+            • IMC <?= esc($imc) ?>
+          <?php endif; ?>
+        </p>
       </div>
       <div class="calorie-banner__right">
-        <span class="calorie-banner__number">1800</span>
+        <span class="calorie-banner__number"><?= esc($calorieTarget) ?></span>
         <span class="calorie-banner__unit">kcal/jour</span>
       </div>
     </div>
 
-    <!-- Mes Ingrédients -->
-    <section class="card card--full" id="ingredients">
-      <div class="card-header">
-        <h2 class="section-title">Regime poulet</h2>
-        <button class="btn-add">
-          Changer de regime
-        </button>
-      </div>
-
-      <div class="ingredient-list">
-
-        <!-- Poulet -->
-        <div class="ingredient-item">
-          <div class="ingredient-item__top">
-            <div class="ingredient-icon ingredient-icon--blue">🍗</div>
-            <div class="ingredient-item__info">
-              <p class="ingredient-item__name">Poulet</p>
-              <p class="ingredient-item__cat">Protéines</p>
-            </div>
-            <button class="ingredient-item__remove" title="Supprimer">—</button>
-          </div>
-          <div class="ingredient-item__bar-row">
-            <span class="ingredient-item__bar-label">Pourcentage</span>
-            <span class="ingredient-item__bar-pct ingredient-item__bar-pct--blue">30%</span>
-          </div>
-          <div class="ing-bar">
-            <div class="ing-bar__fill ing-bar__fill--blue" style="width:30%"></div>
-          </div>
+    <?php if (empty($regimesData)): ?>
+      <section class="card card--full">
+        <div class="card-header">
+          <h2 class="section-title">Régimes</h2>
         </div>
+        <p>Aucun régime actif disponible pour le moment.</p>
+      </section>
+    <?php else: ?>
+      <?php foreach ($regimesData as $index => $item): ?>
+        <?php
+          $regime = $item['regime'] ?? [];
+          $tarifs = $item['tarifs'] ?? [];
+          $aliments = $item['aliments'] ?? [];
+        ?>
+        <section class="card card--full" id="ingredients-<?= esc($regime['id'] ?? $index) ?>">
+          <div class="card-header">
+            <h2 class="section-title"><?= esc($regime['nom'] ?? 'Régime') ?></h2>
+            <button class="btn-add">Changer de régime</button>
+          </div>
 
-        <!-- Riz complet -->
-        <div class="ingredient-item">
-          <div class="ingredient-item__top">
-            <div class="ingredient-icon ingredient-icon--orange">🍚</div>
-            <div class="ingredient-item__info">
-              <p class="ingredient-item__name">Riz complet</p>
-              <p class="ingredient-item__cat">Glucides</p>
+          <?php if (!empty($regime['description'])): ?>
+            <p style="margin-top: 0; color: var(--text-secondary);">
+              <?= esc($regime['description']) ?>
+            </p>
+          <?php endif; ?>
+
+          <?php if (!empty($tarifs)): ?>
+            <div style="margin: 16px 0; display: flex; flex-wrap: wrap; gap: 12px;">
+              <?php foreach ($tarifs as $tarif): ?>
+                <div class="macro macro--blue" style="min-width: 140px;">
+                  <span class="macro__name"><?= esc($tarif['duree_jours'] ?? '-') ?> jours</span>
+                  <span class="macro__value"><?= number_format((float)($tarif['prix'] ?? 0), 0, ',', ' ') ?> Ar</span>
+                </div>
+              <?php endforeach; ?>
             </div>
-            <button class="ingredient-item__remove" title="Supprimer">—</button>
-          </div>
-          <div class="ingredient-item__bar-row">
-            <span class="ingredient-item__bar-label">Pourcentage</span>
-            <span class="ingredient-item__bar-pct ingredient-item__bar-pct--orange">25%</span>
-          </div>
-          <div class="ing-bar">
-            <div class="ing-bar__fill ing-bar__fill--orange" style="width:25%"></div>
-          </div>
-        </div>
+          <?php endif; ?>
 
-        <!-- Brocoli -->
-        <div class="ingredient-item">
-          <div class="ingredient-item__top">
-            <div class="ingredient-icon ingredient-icon--green">🥦</div>
-            <div class="ingredient-item__info">
-              <p class="ingredient-item__name">Brocoli</p>
-              <p class="ingredient-item__cat">Fibres</p>
-            </div>
-            <button class="ingredient-item__remove" title="Supprimer">—</button>
+          <div class="ingredient-list">
+            <?php if (empty($aliments)): ?>
+              <p>Aucun aliment configuré pour ce régime.</p>
+            <?php else: ?>
+              <?php
+                $colors = ['blue', 'orange', 'green', 'yellow', 'purple', 'indigo'];
+              ?>
+              <?php foreach ($aliments as $i => $aliment): ?>
+                <?php $color = $colors[$i % count($colors)]; ?>
+                <div class="ingredient-item">
+                  <div class="ingredient-item__top">
+                    <div class="ingredient-icon ingredient-icon--<?= esc($color) ?>">🍽️</div>
+                    <div class="ingredient-item__info">
+                      <p class="ingredient-item__name"><?= esc($aliment['nom'] ?? 'Aliment') ?></p>
+                      <p class="ingredient-item__cat"><?= esc($aliment['description'] ?? 'Composant') ?></p>
+                    </div>
+                  </div>
+                  <div class="ingredient-item__bar-row">
+                    <span class="ingredient-item__bar-label">Pourcentage</span>
+                    <span class="ingredient-item__bar-pct ingredient-item__bar-pct--<?= esc($color) ?>">
+                      <?= esc($aliment['pct_nourriture'] ?? 0) ?>%
+                    </span>
+                  </div>
+                  <div class="ing-bar">
+                    <div class="ing-bar__fill ing-bar__fill--<?= esc($color) ?>" style="width:<?= esc($aliment['pct_nourriture'] ?? 0) ?>%"></div>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+            <?php endif; ?>
           </div>
-          <div class="ingredient-item__bar-row">
-            <span class="ingredient-item__bar-label">Pourcentage</span>
-            <span class="ingredient-item__bar-pct ingredient-item__bar-pct--green">20%</span>
-          </div>
-          <div class="ing-bar">
-            <div class="ing-bar__fill ing-bar__fill--green" style="width:20%"></div>
-          </div>
-        </div>
-
-        <!-- Avocat -->
-        <div class="ingredient-item">
-          <div class="ingredient-item__top">
-            <div class="ingredient-icon ingredient-icon--yellow">🥑</div>
-            <div class="ingredient-item__info">
-              <p class="ingredient-item__name">Avocat</p>
-              <p class="ingredient-item__cat">Lipides</p>
-            </div>
-            <button class="ingredient-item__remove" title="Supprimer">—</button>
-          </div>
-          <div class="ingredient-item__bar-row">
-            <span class="ingredient-item__bar-label">Pourcentage</span>
-            <span class="ingredient-item__bar-pct ingredient-item__bar-pct--yellow">15%</span>
-          </div>
-          <div class="ing-bar">
-            <div class="ing-bar__fill ing-bar__fill--yellow" style="width:15%"></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
+        </section>
+      <?php endforeach; ?>
+    <?php endif; ?>
 
   </main>
 

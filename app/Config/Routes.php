@@ -15,7 +15,7 @@ $routes->get('/', 'Utilisateurs\UtilisateurController::home');
 
 $routes->get('/accueil', 'Utilisateurs\UtilisateurController::home');
 
-$routes->get('/regime', 'Home::regime');
+$routes->get('/regime', 'Regimes\RegimeController::regime');
 $routes->get('/sport', 'Home::sport');
 
 $routes->get('/login', 'Auth\AuthController::loginPage', ['as' => 'login']);
