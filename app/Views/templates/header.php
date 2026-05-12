@@ -32,6 +32,15 @@
       </a>
     </nav>
 
+    <?php
+      $userName = session()->get('user_name') ?? 'Invité';
+      $solde = null;
+      if (session()->get('is_logged_in')) {
+        $portefeuilleModel = new \App\Models\Portefeuilles\Portefeuille();
+        $portefeuille = $portefeuilleModel->where('utilisateur_id', session()->get('user_id'))->first();
+        $solde = $portefeuille ? $portefeuille['solde'] : 0;
+      }
+    ?>
     <div class="navbar__right">
       <div class="user-pill">
         <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -39,7 +48,7 @@
           <circle cx="12" cy="8" r="4" />
           <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
         </svg>
-        <a href="/mon-espace">Marie Dupont</a>
+        <a href="/mon-espace"><?= esc($userName) ?></a>
       </div>
       <div class="points-pill">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -47,7 +56,7 @@
           <rect x="2" y="5" width="20" height="14" rx="2" />
           <line x1="2" y1="10" x2="22" y2="10" />
         </svg>
-        250 pts
+        <?= $solde === null ? '0 Ar' : number_format((float) $solde, 0, ',', ' ') . ' Ar' ?>
       </div>
     </div>
   </header>

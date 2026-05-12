@@ -81,14 +81,14 @@
     <section class="card card--full" id="objectif">
       <div class="card-header">
         <h2 class="section-title">Mon Objectif</h2>
-        <button class="btn-modifier btn-modifier--right">
+        <a class="btn-modifier btn-modifier--right" href="/mon-espace">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
           </svg>
           Modifier
-        </button>
+        </a>
       </div>
 
       <div class="goal-card goal-card--orange">
@@ -102,11 +102,26 @@
           <?php endif; ?>
         </div>
         <div class="goal-card__icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="white" stroke-width="3.5"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6,16 18,28 28,20 42,34" />
-            <polyline points="32,34 42,34 42,24" />
-          </svg>
+          <?php if ($objectifType === 'gain'): ?>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="white" stroke-width="3.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6,32 18,20 28,28 42,14" />
+              <polyline points="32,14 42,14 42,24" />
+            </svg>
+          <?php elseif ($objectifType === 'perte'): ?>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="white" stroke-width="3.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6,16 18,28 28,20 42,34" />
+              <polyline points="32,34 42,34 42,24" />
+            </svg>
+          <?php else: ?>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="white" stroke-width="3.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="24" cy="24" r="18" />
+              <line x1="24" y1="14" x2="24" y2="24" />
+              <line x1="24" y1="24" x2="30" y2="30" />
+            </svg>
+          <?php endif; ?>
         </div>
       </div>
     </section>
@@ -119,6 +134,14 @@
         <div class="card-header">
           <div class="card-icon card-icon--green">🍎</div>
           <h2 class="section-title">Régime Actuel</h2>
+          <a class="btn-modifier btn-modifier--right" href="/regime">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+            </svg>
+            Modifier
+          </a>
         </div>
 
         <?php if ($regimeActuel): ?>
@@ -151,14 +174,6 @@
         <div class="card-header">
           <div class="card-icon card-icon--purple">🏃</div>
           <h2 class="section-title">Activités Sportives</h2>
-          <button class="btn-modifier btn-modifier--right">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-            </svg>
-            Modifier
-          </button>
         </div>
 
         <ul class="activity-list">
