@@ -167,7 +167,7 @@
                                                 <input type="hidden" name="activite_id" value="<?= $suggestion['activite']['id'] ?>">
                                             <?php endif; ?>
                                             <input type="hidden" name="total_price" value="<?= $totalPrice ?>">
-                                            <button type="submit" class="btn btn-success btn-lg">Acheter le programme avec mon Portefeuille</button>
+                                            <button type="submit" class="btn btn-success btn-lg">Participer au programme </button>
                                         </form>
                                     </div>
                                 </div>

@@ -35,11 +35,11 @@
         <ul class="nav navbar-nav navbar-right navbar-user">
           <?php if (session()->get('is_logged_in')): ?>
             <li class="navbar-text">
-              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              <span aria-hidden="true">👤</span>
               <a href="/mon-espace"><?= esc($userName) ?></a>
             </li>
             <li class="navbar-text">
-              <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+              <span aria-hidden="true">💳</span>
               <?= $solde === null ? '0 Ar' : number_format((float) $solde, 0, ',', ' ') . ' Ar' ?>
             </li>
             <li>
