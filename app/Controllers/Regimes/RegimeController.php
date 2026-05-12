@@ -44,9 +44,9 @@ class RegimeController extends BaseController
         $objectifType = null;
         if ($objectif) {
             $label = strtolower($objectif['libelle'] ?? '');
-            if (str_contains($label, 'perte')) {
+            if (str_contains($label, 'duire')) {
                 $objectifType = 'perte';
-            } elseif (str_contains($label, 'gain')) {
+            } elseif (str_contains($label, 'ugmenter')) {
                 $objectifType = 'gain';
             }
         }
@@ -55,7 +55,7 @@ class RegimeController extends BaseController
             $objectifType = ($imc >= 25) ? 'perte' : 'gain';
         }
 
-        $calorieTarget = ($objectifType === 'gain') ? 3000 : 1600;
+        $calorieTarget = $objectifType === 'gain' ? 3000 : 1600;
 
         if ($objectifId) {
             $relations = $objectifRegimeModel->where('objectif_id', $objectifId)->findAll();
