@@ -10,7 +10,18 @@ class Home extends BaseController
             if (session()->get('is_admin')) {
                 return redirect()->to('/admin/dashboard');
             }
-            return redirect()->to('/mon-espace');
+            return redirect()->to('/accueil');
+        }
+        return view('accueil-invite');
+    }
+
+    public function home()
+    {
+        if (session()->get('is_logged_in')) {
+            if (session()->get('is_admin')) {
+                return redirect()->to('/admin/dashboard');
+            }
+            return view('index-front') ;
         }
         return view('accueil-invite');
     }
