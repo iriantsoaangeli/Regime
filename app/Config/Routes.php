@@ -16,7 +16,7 @@ $routes->get('/', 'Utilisateurs\UtilisateurController::home');
 $routes->get('/accueil', 'Utilisateurs\UtilisateurController::home');
 
 $routes->get('/regime', 'Regimes\RegimeController::regime');
-$routes->get('/sport', 'Home::sport');
+$routes->get('/sport', 'Activites\ActiviteController::sport');
 
 $routes->get('/login', 'Auth\AuthController::loginPage', ['as' => 'login']);
 $routes->post('/login', 'Auth\AuthController::loginSubmit');

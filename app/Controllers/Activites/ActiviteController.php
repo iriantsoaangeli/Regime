@@ -65,4 +65,9 @@ class ActiviteController extends BaseController
         
         return redirect()->to('/admin/sport')->with('message', 'Activité désactivée.');
     }
+
+        public function sport(): string
+    {
+        return view('sport');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Controllers\Commandes;
 
 use App\Controllers\BaseController;
 use App\Models\Commandes\Commande;
+use App\Models\Regimes\TarifRegime;
 use App\Models\Portefeuilles\Portefeuille;
 use App\Models\Portefeuilles\MouvementPortefeuille;
 
@@ -12,9 +13,16 @@ class CommandeController extends BaseController
     public function acheterProgramme()
     {
         $userId = session()->get('user_id') ?? 1;
-        $totalPrice = $this->request->getPost('total_price');
         $tarifId = $this->request->getPost('tarif_id');
         $activiteId = $this->request->getPost('activite_id');
+
+        $tarifModel = new TarifRegime();
+        $tarif = $tarifModel->find($tarifId);
+        if (!$tarif) {
+            return redirect()->back()->with('error', 'Tarif invalide.');
+        }
+
+        $totalPrice = (float) ($tarif['prix'] ?? 0);
 
         $portefeuilleModel = new Portefeuille();
         $portefeuille = $portefeuilleModel->where('utilisateur_id', $userId)->first();
@@ -54,6 +62,6 @@ class CommandeController extends BaseController
             'libelle' => 'Achat du programme santé'
         ]);
 
-        return redirect()->back()->with('message', 'Achat réussi ! Le programme a été validé et payé via votre portefeuille.');
+        return redirect()->to('/regime')->with('message', 'Régime changé avec succès. Le paiement a été effectué via votre portefeuille.');
     }
 }

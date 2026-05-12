@@ -16,15 +16,8 @@ class Home extends BaseController
     }
 
 
-    public function regime(): string
-    {
-        return view('regime');
-    }
 
-    public function sport(): string
-    {
-        return view('sport');
-    }
+
 
     public function dashboard(): string
     {

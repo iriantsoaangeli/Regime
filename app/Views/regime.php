@@ -103,6 +103,17 @@
       </div>
     </div>
 
+    <?php if (session()->getFlashdata('message')): ?>
+      <div style="padding: 1rem; background: #dcfce7; color: #166534; border-radius: 8px; margin-bottom: 20px;">
+        <?= session()->getFlashdata('message') ?>
+      </div>
+    <?php endif; ?>
+    <?php if (session()->getFlashdata('error')): ?>
+      <div style="padding: 1rem; background: #fee2e2; color: #991b1b; border-radius: 8px; margin-bottom: 20px;">
+        <?= session()->getFlashdata('error') ?>
+      </div>
+    <?php endif; ?>
+
     <?php if (empty($regimesData)): ?>
       <section class="card card--full">
         <div class="card-header">
@@ -120,7 +131,6 @@
         <section class="card card--full" id="ingredients-<?= esc($regime['id'] ?? $index) ?>">
           <div class="card-header">
             <h2 class="section-title"><?= esc($regime['nom'] ?? 'Régime') ?></h2>
-            <button class="btn-add">Changer de régime</button>
           </div>
 
           <?php if (!empty($regime['description'])): ?>
@@ -132,10 +142,14 @@
           <?php if (!empty($tarifs)): ?>
             <div style="margin: 16px 0; display: flex; flex-wrap: wrap; gap: 12px;">
               <?php foreach ($tarifs as $tarif): ?>
-                <div class="macro macro--blue" style="min-width: 140px;">
-                  <span class="macro__name"><?= esc($tarif['duree_jours'] ?? '-') ?> jours</span>
-                  <span class="macro__value"><?= number_format((float)($tarif['prix'] ?? 0), 0, ',', ' ') ?> Ar</span>
-                </div>
+                <form method="post" action="/commande/acheter-programme" style="margin: 0;">
+                  <input type="hidden" name="tarif_id" value="<?= esc($tarif['id'] ?? '') ?>">
+                  <input type="hidden" name="total_price" value="<?= esc($tarif['prix'] ?? 0) ?>">
+                  <button class="macro macro--blue" type="submit" style="min-width: 140px; cursor: pointer; border: none;">
+                    <span class="macro__name"><?= esc($tarif['duree_jours'] ?? '-') ?> jours</span>
+                    <span class="macro__value"><?= number_format((float)($tarif['prix'] ?? 0), 0, ',', ' ') ?> Ar</span>
+                  </button>
+                </form>
               <?php endforeach; ?>
             </div>
           <?php endif; ?>
