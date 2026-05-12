@@ -14,9 +14,6 @@ class Regime extends Model
     protected $allowedFields    = [
         'nom', 
         'description', 
-        'pct_viande',
-        'pct_poisson',
-        'pct_volaille',
         'is_actif'
     ];
 }

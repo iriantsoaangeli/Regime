@@ -60,12 +60,4 @@ class Home extends BaseController
 
         return view('dashboard', $data);
     }
-    public function adminRegime(): string
-    {
-        return view('admin-regime');
-    }
-    public function adminSport(): string
-    {
-        return view('admin-sport');
-    }   
 }

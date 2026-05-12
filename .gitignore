@@ -1,2 +1,19 @@
 ITU-S4-P18-PROJET.pdf
 todo.pdf
+# Fichiers de test
+cookie.txt
+
+# CodeIgniter 4 Writable
+writable/cache/*
+!writable/cache/index.html
+writable/logs/*
+!writable/logs/index.html
+writable/session/*
+!writable/session/index.html
+writable/debugbar/*
+!writable/debugbar/index.html
+writable/uploads/*
+!writable/uploads/index.html
+
+# Environnement
+.env

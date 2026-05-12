@@ -28,9 +28,9 @@ $routes->post('/register/step2', '\App\Controllers\Auth\AuthController::register
 $routes->get('/logout', '\App\Controllers\Auth\AuthController::logout');
 
 // Admin Auth
-$routes->get('/admin/login', '\App\Controllers\Auth\AuthController::adminLoginPage', ['as' => 'admin.login']);
-$routes->post('/admin/login', '\App\Controllers\Auth\AuthController::adminLoginSubmit', ['as' => 'admin.login.submit']);
-$routes->get('/admin/logout', '\App\Controllers\Auth\AuthController::adminLogout');
+$routes->get('/admin/login', '\App\Controllers\Auth\AdminAuthController::loginForm', ['as' => 'admin.login']);
+$routes->post('/admin/login', '\App\Controllers\Auth\AdminAuthController::login', ['as' => 'admin.login.submit']);
+$routes->get('/admin/logout', '\App\Controllers\Auth\AdminAuthController::logout');
 
 // ============================================================
 // PROTECTED USER ROUTES (AuthFilter)
@@ -56,15 +56,13 @@ $routes->group('', ['filter' => 'AuthFilter'], function($routes) {
 $routes->group('admin', ['filter' => 'AdminFilter'], function($routes) {
     $routes->get('dashboard', 'Home::dashboard');
     $routes->get('regime', '\App\Controllers\Regimes\RegimeController::index');
-    $routes->match(['get', 'post'], 'regime/create', '\App\Controllers\Regimes\RegimeController::create');
-    $routes->match(['get', 'post'], 'regime/edit/(:num)', '\App\Controllers\Regimes\RegimeController::edit/$1');
+    $routes->match(['GET', 'POST'], 'regime/create', '\App\Controllers\Regimes\RegimeController::create');
+    $routes->match(['GET', 'POST'], 'regime/edit/(:num)', '\App\Controllers\Regimes\RegimeController::edit/$1');
     $routes->get('regime/delete/(:num)', '\App\Controllers\Regimes\RegimeController::destroy/$1');
     
     $routes->get('sport', '\App\Controllers\Activites\ActiviteController::index');
-    $routes->match(['get', 'post'], 'sport/create', '\App\Controllers\Activites\ActiviteController::create');
-    $routes->match(['get', 'post'], 'sport/edit/(:num)', '\App\Controllers\Activites\ActiviteController::edit/$1');
+    $routes->match(['GET', 'POST'], 'sport/create', '\App\Controllers\Activites\ActiviteController::create');
+    $routes->match(['GET', 'POST'], 'sport/edit/(:num)', '\App\Controllers\Activites\ActiviteController::edit/$1');
     $routes->get('sport/delete/(:num)', '\App\Controllers\Activites\ActiviteController::destroy/$1');
 });
 
-// Legacy route (should be removed or protected)
-$routes->get('/admin/sport', 'Home::adminSport');

@@ -243,68 +243,6 @@ class AuthController extends BaseController
     /**
      * Page de login administrateur
      */
-    public function adminLoginPage()
-    {
-        if (session()->get('is_logged_in') && session()->get('is_admin')) {
-            return redirect()->to('/admin/dashboard');
-        }
-        return view('auth/admin-login');
-    }
-
-    /**
-     * Traitement du login administrateur
-     */
-    public function adminLoginSubmit()
-    {
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
-
-        // Pour cet exemple, on utilise aussi la table utilisateurs avec un rôle admin
-        // En production, vous pourriez avoir une table admins séparée
-        // Pour maintenant, on accepte les comptes avec un email admin preset
-        $admins = ['admin@healthylife.local', 'support@healthylife.local'];
-
-        if (!in_array($email, $admins)) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Accès administrateur refusé');
-        }
-
-        $userModel = new Utilisateur();
-        $user = $userModel->where('email', $email)->first();
-
-        if (!$user) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Email ou mot de passe incorrect');
-        }
-
-        if (!password_verify($password, $user['mot_de_passe_hash'])) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Email ou mot de passe incorrect');
-        }
-
-        if ($user['is_active'] != 1) {
-            return redirect()->back()
-                ->with('error', 'Compte désactivé');
-        }
-
-        // Connexion admin réussie
-        session()->set([
-            'user_id' => $user['id'],
-            'user_email' => $user['email'],
-            'user_name' => $user['prenom'] . ' ' . $user['nom'],
-            'is_logged_in' => true,
-            'is_admin' => true
-        ]);
-
-        return redirect()->to('/admin/dashboard')->with('message', 'Bienvenue administrateur!');
-    }
-
-    /**
-     * Déconnexion administrateur
-     */
     public function adminLogout()
     {
         session()->destroy();

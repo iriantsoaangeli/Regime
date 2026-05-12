@@ -31,26 +31,21 @@ INSERT INTO ref_categories_activite (libelle, description) VALUES
 -- ------------------------------------------------------------
 --  5 Régimes
 -- ------------------------------------------------------------
-INSERT INTO regimes (nom, description, pct_viande, pct_poisson, pct_volaille) VALUES
+INSERT INTO regimes (nom, description) VALUES
   ('Méditerranéen Équilibré',
-   'Régime inspiré du bassin méditerranéen, riche en poisson et légumes frais.',
-   20.00, 50.00, 30.00),
+   'Régime inspiré du bassin méditerranéen, riche en poisson et légumes frais.'),
 
   ('Masse Musculaire Pro',
-   'Programme hyperprotéiné axé sur la viande maigre et la volaille pour la prise de masse.',
-   45.00, 15.00, 40.00),
+   'Programme hyperprotéiné axé sur la viande maigre et la volaille pour la prise de masse.'),
 
   ('Minceur Douce',
-   'Régime hypocalorique équilibré favorisant le poisson et la volaille pour perdre du poids sainement.',
-   10.00, 45.00, 45.00),
+   'Régime hypocalorique équilibré favorisant le poisson et la volaille pour perdre du poids sainement.'),
 
   ('Protéine Intensive',
-   'Programme pour sportifs de haut niveau avec forte proportion de viande rouge et blanche.',
-   50.00, 10.00, 40.00),
+   'Programme pour sportifs de haut niveau avec forte proportion de viande rouge et blanche.'),
 
   ('Équilibre Santé',
-   'Régime varié et complet adapté à un retour vers un IMC idéal sans privations excessives.',
-   30.00, 35.00, 35.00);
+   'Régime varié et complet adapté à un retour vers un IMC idéal sans privations excessives.');
 
 -- Tarifs pour chaque régime (3 durées par régime)
 INSERT INTO tarifs_regime (regime_id, duree_jours, prix, variation_poids_kg) VALUES
@@ -103,6 +98,9 @@ INSERT INTO activites_sportives (categorie_id, nom, description, duree_jours, pr
 --    admin        → "Admin@2026"
 --  En production : stocker le hash bcrypt
 -- ------------------------------------------------------------
+INSERT INTO admins (login, mot_de_passe_hash, nom) VALUES
+  ('admin', '$2y$10$JcGjr0qCCFWCnkhhg4i/W.lLj3u3//mm90AfdBgtP8QBAiguDOK9q', 'Administrateur');
+
 INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe_hash, genre_id, date_naissance) VALUES
   ('Rakoto',    'Andry',    'andry.rakoto@mail.mg',    '$2y$12$hashbcrypt_user1_placeholder', 1, '1995-03-14'),
   ('Rasoa',     'Miora',    'miora.rasoa@mail.mg',     '$2y$12$hashbcrypt_user2_placeholder', 2, '1998-07-22'),

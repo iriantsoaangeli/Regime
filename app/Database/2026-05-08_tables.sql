@@ -71,6 +71,15 @@ CREATE TABLE ref_categories_activite (
 -- ------------------------------------------------------------
 --  utilisateurs
 -- ------------------------------------------------------------
+CREATE TABLE admins (
+  id                INT          NOT NULL AUTO_INCREMENT,
+  login             VARCHAR(100) NOT NULL,
+  mot_de_passe_hash VARCHAR(255) NOT NULL,
+  nom               VARCHAR(100),
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_admins_login (login)
+);
+
 CREATE TABLE utilisateurs (
   id                INT          NOT NULL AUTO_INCREMENT,
   nom               VARCHAR(100) NOT NULL,

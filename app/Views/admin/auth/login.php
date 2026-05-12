@@ -28,11 +28,11 @@
                 <?= csrf_field() ?>
 
                 <div class="form-group">
-                    <label for="email" class="form-label">Email administrateur</label>
-                    <input type="email" id="email" name="email" class="form-input" 
-                           value="<?= old('email') ?>" required>
-                    <?php if (session()->has('errors.email')): ?>
-                        <span class="form-error"><?= session('errors.email') ?></span>
+                    <label for="email" class="form-label">Login</label>
+                    <input type="text" id="login" name="login" class="form-input" 
+                           value="<?= old('login') ?>" required>
+                    <?php if (session()->has('errors.login')): ?>
+                        <span class="form-error"><?= session('errors.login') ?></span>
                     <?php endif; ?>
                 </div>
 
