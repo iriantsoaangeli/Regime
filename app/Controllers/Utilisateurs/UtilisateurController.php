@@ -12,6 +12,7 @@ use App\Models\Regimes\Regime;
 use App\Models\Regimes\RegimeNourriture;
 use App\Models\Regimes\Nourriture;
 use App\Models\Activites\Activite;
+use App\Models\Activites\ObjectifActivite;
 
 class UtilisateurController extends BaseController
 {
@@ -47,6 +48,7 @@ class UtilisateurController extends BaseController
             $regimeNourritureModel = new RegimeNourriture();
             $nourritureModel = new Nourriture();
             $activiteModel = new Activite();
+            $objectifActiviteModel = new ObjectifActivite();
 
             $profil = $profilModel->where('utilisateur_id', $userId)->first();
             $objectif = null;
@@ -73,22 +75,34 @@ class UtilisateurController extends BaseController
                 }
             }
 
-            $activiteIds = $commandeModel->select('activite_id')
-                ->where('utilisateur_id', $userId)
-                ->where('activite_id IS NOT NULL', null, false)
-                ->findColumn('activite_id');
-            $activites = [];
-            if (!empty($activiteIds)) {
-                $activiteIds = array_values(array_unique($activiteIds));
-                $activites = $activiteModel->whereIn('id', $activiteIds)->findAll();
+            $objectifType = null;
+            if ($objectif) {
+                $label = strtolower($objectif['libelle'] ?? '');
+                if (str_contains($label, 'augmenter')) {
+                    $objectifType = 'gain';
+                } elseif (str_contains($label, 'duire')) {
+                    $objectifType = 'perte';
+                }
+            }
+
+            $objectifIdFinal = $objectif['id'] ?? null;
+            $activitesRecommandees = [];
+            if ($objectifIdFinal) {
+                $activitesRecommandees = $activiteModel->select('activites_sportives.*')
+                    ->join('objectif_activites', 'objectif_activites.activite_id = activites_sportives.id', 'inner')
+                    ->where('objectif_activites.objectif_id', $objectifIdFinal)
+                    ->where('activites_sportives.is_actif', 1)
+                    ->orderBy('activites_sportives.nom', 'ASC')
+                    ->findAll();
             }
 
             return view('index-front', [
                 'profil' => $profil,
                 'objectif' => $objectif,
+                'objectifType' => $objectifType,
                 'regimeActuel' => $regimeActuel,
                 'regimeNourritures' => $regimeNourritures,
-                'activites' => $activites
+                'activitesRecommandees' => $activitesRecommandees
             ]);
         }
         return view('accueil-invite');

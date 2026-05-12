@@ -70,10 +70,11 @@
   <main class="main">
 
     <?php
-      $objectif = $objectif ?? null;
-      $regimeActuel = $regimeActuel ?? null;
-      $regimeNourritures = $regimeNourritures ?? [];
-      $activites = $activites ?? [];
+  $objectif = $objectif ?? null;
+  $objectifType = $objectifType ?? null;
+  $regimeActuel = $regimeActuel ?? null;
+  $regimeNourritures = $regimeNourritures ?? [];
+  $activitesRecommandees = $activitesRecommandees ?? [];
     ?>
 
     <!-- Mon Objectif -->
@@ -161,12 +162,12 @@
         </div>
 
         <ul class="activity-list">
-          <?php if (empty($activites)): ?>
+          <?php if (empty($activitesRecommandees)): ?>
             <li class="activity activity--blue">
               <div class="activity__accent"></div>
               <div class="activity__info">
-                <p class="activity__name">Aucune activité enregistrée</p>
-                <p class="activity__meta">Ajoutez une activité pour la voir ici</p>
+                <p class="activity__name">Aucune activité recommandée</p>
+                <p class="activity__meta">Définissez votre objectif pour voir des recommandations</p>
               </div>
               <span class="activity__duration activity__duration--blue">-</span>
             </li>
@@ -178,7 +179,7 @@
                 ['activity--indigo', 'activity__duration--indigo']
               ];
             ?>
-            <?php foreach ($activites as $index => $activite): ?>
+            <?php foreach ($activitesRecommandees as $index => $activite): ?>
               <?php $style = $activityStyles[$index % count($activityStyles)]; ?>
               <li class="activity <?= $style[0] ?>">
                 <div class="activity__accent"></div>

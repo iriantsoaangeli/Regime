@@ -73,6 +73,13 @@
   <!-- ── MAIN ───────────────────────────────────────────────── -->
   <main class="main">
 
+    <?php
+      $objectif = $objectif ?? null;
+      $objectifType = $objectifType ?? null;
+      $imc = $imc ?? null;
+      $activitesRecommandees = $activitesRecommandees ?? [];
+    ?>
+
     <!-- Bannière objectif sport -->
     <div class="sport-banner">
       <div class="sport-banner__icon">
@@ -83,144 +90,59 @@
         </svg>
       </div>
       <div>
-        <h2 class="sport-banner__title">Votre objectif : Gagner du poids</h2>
-        <p class="sport-banner__sub">Développez votre masse musculaire avec des activités adaptées</p>
+        <h2 class="sport-banner__title">
+          <?php if ($objectif): ?>
+            Votre objectif : <?= esc($objectif['libelle'] ?? '') ?>
+          <?php elseif ($objectifType === 'gain'): ?>
+            Votre objectif : Augmenter
+          <?php elseif ($objectifType === 'perte'): ?>
+            Votre objectif : Réduire
+          <?php else: ?>
+            Votre objectif : Non défini
+          <?php endif; ?>
+        </h2>
+        <p class="sport-banner__sub">
+          <?php if ($objectifType === 'gain'): ?>
+            Développez votre masse musculaire avec des activités adaptées.
+          <?php elseif ($objectifType === 'perte'): ?>
+            Brûlez des calories avec des activités adaptées.
+          <?php else: ?>
+            Définissez votre profil pour des suggestions adaptées.
+          <?php endif; ?>
+          <?php if ($imc !== null): ?>
+            • IMC <?= esc($imc) ?>
+          <?php endif; ?>
+        </p>
       </div>
     </div>
 
-    <!-- Mes Activités -->
     <section class="card card--full">
-      <h2 class="section-title" style="margin-bottom: 20px;">Mes Activités</h2>
+      <h2 class="section-title" style="margin-bottom: 20px;">Activités recommandées</h2>
 
       <div class="sport-activity-list">
-
-        <!-- Cardio -->
-        <div class="sport-activity sport-activity--indigo">
-          <div class="sport-activity__left">
-            <div class="sport-activity__icon sport-activity__icon--indigo">🏋️</div>
-            <div class="sport-activity__info">
-              <p class="sport-activity__name">Cardio</p>
-              <p class="sport-activity__sub">Exercice cardiovasculaire</p>
+        <?php if (empty($activitesRecommandees)): ?>
+          <p>Aucune activité recommandée disponible pour cet objectif.</p>
+        <?php else: ?>
+          <?php
+            $styles = ['purple', 'blue', 'orange', 'green', 'indigo'];
+          ?>
+          <?php foreach ($activitesRecommandees as $index => $activite): ?>
+            <?php $style = $styles[$index % count($styles)]; ?>
+            <div class="sport-activity sport-activity--<?= esc($style) ?>">
+              <div class="sport-activity__left">
+                <div class="sport-activity__icon sport-activity__icon--<?= esc($style) ?>">✨</div>
+                <div class="sport-activity__info">
+                  <p class="sport-activity__name"><?= esc($activite['nom'] ?? 'Activité') ?></p>
+                  <p class="sport-activity__sub"><?= esc($activite['description'] ?? 'Programme') ?></p>
+                </div>
+              </div>
+              <div class="sport-activity__duration sport-activity__duration--<?= esc($style) ?>">
+                <span class="sport-activity__num"><?= esc($activite['duree_jours'] ?? '-') ?></span>
+                <span class="sport-activity__unit">jours</span>
+              </div>
             </div>
-          </div>
-          <div class="sport-activity__duration sport-activity__duration--indigo">
-            <span class="sport-activity__num">60</span>
-            <span class="sport-activity__unit">minutes</span>
-          </div>
-        </div>
-
-        <!-- Musculation -->
-        <div class="sport-activity sport-activity--green">
-          <div class="sport-activity__left">
-            <div class="sport-activity__icon sport-activity__icon--green">💪</div>
-            <div class="sport-activity__info">
-              <p class="sport-activity__name">Musculation</p>
-              <p class="sport-activity__sub">Renforcement musculaire</p>
-            </div>
-          </div>
-          <div class="sport-activity__duration sport-activity__duration--green">
-            <span class="sport-activity__num">45</span>
-            <span class="sport-activity__unit">minutes</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Propositions -->
-    <section class="card card--full">
-      <h2 class="section-title" style="margin-bottom: 20px;">Propositions</h2>
-
-      <div class="proposals-grid">
-
-        <!-- Pompes -->
-        <div class="proposal-card">
-          <div class="proposal-card__top">
-            <div class="proposal-icon proposal-icon--orange">💪</div>
-            <div class="proposal-card__info">
-              <p class="proposal-card__name">Pompes</p>
-              <p class="proposal-card__sub">Renforcement du haut du corps</p>
-            </div>
-          </div>
-          <div class="proposal-card__bottom">
-            <span class="proposal-card__duration">45 minutes</span>
-            <button class="btn-ajouter">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
-              Ajouter
-            </button>
-          </div>
-        </div>
-
-        <!-- Course -->
-        <div class="proposal-card">
-          <div class="proposal-card__top">
-            <div class="proposal-icon proposal-icon--blue">🏃</div>
-            <div class="proposal-card__info">
-              <p class="proposal-card__name">Course</p>
-              <p class="proposal-card__sub">Endurance et cardio</p>
-            </div>
-          </div>
-          <div class="proposal-card__bottom">
-            <span class="proposal-card__duration">45 minutes</span>
-            <button class="btn-ajouter">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
-              Ajouter
-            </button>
-          </div>
-        </div>
-
-        <!-- Squat -->
-        <div class="proposal-card">
-          <div class="proposal-card__top">
-            <div class="proposal-icon proposal-icon--purple">🏋️</div>
-            <div class="proposal-card__info">
-              <p class="proposal-card__name">Squat</p>
-              <p class="proposal-card__sub">Renforcement des jambes</p>
-            </div>
-          </div>
-          <div class="proposal-card__bottom">
-            <span class="proposal-card__duration">30 minutes</span>
-            <button class="btn-ajouter">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
-              Ajouter
-            </button>
-          </div>
-        </div>
-
-        <!-- Yoga -->
-        <div class="proposal-card">
-          <div class="proposal-card__top">
-            <div class="proposal-icon proposal-icon--green">🧘</div>
-            <div class="proposal-card__info">
-              <p class="proposal-card__name">Yoga</p>
-              <p class="proposal-card__sub">Souplesse et relaxation</p>
-            </div>
-          </div>
-          <div class="proposal-card__bottom">
-            <span class="proposal-card__duration">40 minutes</span>
-            <button class="btn-ajouter">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
-              Ajouter
-            </button>
-          </div>
-        </div>
-
+          <?php endforeach; ?>
+        <?php endif; ?>
       </div>
     </section>
 

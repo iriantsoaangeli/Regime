@@ -4,6 +4,9 @@ namespace App\Controllers\Activites;
 
 use App\Controllers\BaseController;
 use App\Models\Activites\Activite;
+use App\Models\Activites\ObjectifActivite;
+use App\Models\Utilisateurs\ProfilSante;
+use App\Models\References\Objectif;
 
 class ActiviteController extends BaseController
 {
@@ -68,6 +71,67 @@ class ActiviteController extends BaseController
 
         public function sport(): string
     {
-        return view('sport');
+        $userId = session()->get('user_id');
+
+        $profilModel = new ProfilSante();
+        $objectifModel = new Objectif();
+        $objectifActiviteModel = new ObjectifActivite();
+        $activiteModel = new Activite();
+
+        $profil = $userId ? $profilModel->where('utilisateur_id', $userId)->first() : null;
+        $imc = $profil['imc'] ?? null;
+
+        $objectifId = $profil['objectif_id'] ?? null;
+        if (!$objectifId && $imc !== null) {
+            $objectifId = ($imc >= 25) ? 'perte' : 'gain';
+        }
+
+        $objectif = null;
+        $objectifType = null;
+        if (is_numeric($objectifId)) {
+            $objectif = $objectifModel->find($objectifId);
+        }
+
+        if ($objectif) {
+            $label = strtolower($objectif['libelle'] ?? '');
+            if (str_contains($label, 'augmenter')) {
+                $objectifType = 'gain';
+            } elseif (str_contains($label, 'duire')) {
+                $objectifType = 'perte';
+            }
+        }
+
+        if (!$objectif && is_string($objectifId)) {
+            if ($objectifId === 'gain') {
+                $objectif = $objectifModel->like('libelle', 'augmenter', 'both')->first();
+                $objectifType = 'gain';
+            } elseif ($objectifId === 'perte') {
+                $objectif = $objectifModel->like('libelle', 'duire', 'both')->first();
+                $objectifType = 'perte';
+            }
+        }
+
+        if (!$objectifType && $imc !== null) {
+            $objectifType = ($imc >= 25) ? 'perte' : 'gain';
+        }
+
+        $objectifIdFinal = $objectif['id'] ?? null;
+        $activitesRecommandees = [];
+        if ($objectifIdFinal) {
+            $activitesRecommandees = $activiteModel->select('activites_sportives.*')
+                ->join('objectif_activites', 'objectif_activites.activite_id = activites_sportives.id', 'inner')
+                ->where('objectif_activites.objectif_id', $objectifIdFinal)
+                ->where('activites_sportives.is_actif', 1)
+                ->orderBy('activites_sportives.nom', 'ASC')
+                ->findAll();
+        }
+
+
+        return view('sport', [
+            'objectif' => $objectif,
+            'objectifType' => $objectifType,
+            'imc' => $imc,
+            'activitesRecommandees' => $activitesRecommandees
+        ]);
     }
 }
