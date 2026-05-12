@@ -4,6 +4,14 @@ namespace App\Controllers\Utilisateurs;
 
 use App\Controllers\BaseController;
 use App\Models\Utilisateurs\Utilisateur;
+use App\Models\Utilisateurs\ProfilSante;
+use App\Models\References\Objectif;
+use App\Models\Commandes\Commande;
+use App\Models\Regimes\TarifRegime;
+use App\Models\Regimes\Regime;
+use App\Models\Regimes\RegimeNourriture;
+use App\Models\Regimes\Nourriture;
+use App\Models\Activites\Activite;
 
 class UtilisateurController extends BaseController
 {
@@ -29,7 +37,59 @@ class UtilisateurController extends BaseController
             if (session()->get('is_admin')) {
                 return redirect()->to('/admin/dashboard');
             }
-            return view('index-front');
+            $userId = session()->get('user_id');
+
+            $profilModel = new ProfilSante();
+            $objectifModel = new Objectif();
+            $commandeModel = new Commande();
+            $tarifRegimeModel = new TarifRegime();
+            $regimeModel = new Regime();
+            $regimeNourritureModel = new RegimeNourriture();
+            $nourritureModel = new Nourriture();
+            $activiteModel = new Activite();
+
+            $profil = $profilModel->where('utilisateur_id', $userId)->first();
+            $objectif = null;
+            if (!empty($profil['objectif_id'])) {
+                $objectif = $objectifModel->find($profil['objectif_id']);
+            }
+
+            $commande = $commandeModel->where('utilisateur_id', $userId)
+                ->orderBy('id', 'DESC')
+                ->first();
+            $regimeActuel = null;
+            $regimeNourritures = [];
+            if (!empty($commande['tarif_regime_id'])) {
+                $tarif = $tarifRegimeModel->find($commande['tarif_regime_id']);
+                if (!empty($tarif['regime_id'])) {
+                    $regimeActuel = $regimeModel->find($tarif['regime_id']);
+                    if (!empty($regimeActuel)) {
+                        $regimeNourritures = $regimeNourritureModel
+                            ->select('regime_nourritures.pct_nourriture, nourritures.nom, nourritures.description')
+                            ->join($nourritureModel->getTable(), 'nourritures.id = regime_nourritures.nourriture_id', 'inner')
+                            ->where('regime_nourritures.regime_id', $regimeActuel['id'])
+                            ->findAll();
+                    }
+                }
+            }
+
+            $activiteIds = $commandeModel->select('activite_id')
+                ->where('utilisateur_id', $userId)
+                ->where('activite_id IS NOT NULL', null, false)
+                ->findColumn('activite_id');
+            $activites = [];
+            if (!empty($activiteIds)) {
+                $activiteIds = array_values(array_unique($activiteIds));
+                $activites = $activiteModel->whereIn('id', $activiteIds)->findAll();
+            }
+
+            return view('index-front', [
+                'profil' => $profil,
+                'objectif' => $objectif,
+                'regimeActuel' => $regimeActuel,
+                'regimeNourritures' => $regimeNourritures,
+                'activites' => $activites
+            ]);
         }
         return view('accueil-invite');
     }

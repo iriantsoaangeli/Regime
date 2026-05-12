@@ -15,7 +15,7 @@
         </svg>
         Dashboard
       </a>
-      <a href="liste-regime.php" class="nav-link nav-link--active">
+      <a href="/regime" class="nav-link nav-link--active">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
@@ -24,7 +24,7 @@
         </svg>
         Régimes
       </a>
-      <a href="liste-sport.php" class="nav-link">
+      <a href="/sport" class="nav-link">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10" />

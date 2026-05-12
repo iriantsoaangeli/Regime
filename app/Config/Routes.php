@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-$routes->get('/', 'UtilisateurController::home');
+$routes->get('/', 'Utilisateurs\UtilisateurController::home');
 
 
 // ============================================================
@@ -38,7 +38,7 @@ $routes->get('/admin/logout', 'Auth\AdminAuthController::logout');
 // PROTECTED USER ROUTES (AuthFilter)
 // ============================================================
 $routes->group('', ['filter' => 'AuthFilter'], function ($routes) {
-    $routes->get('/mon-espace', 'Utilisateurs\UtilisateurController::myDashboard');
+    $routes->get('/mon-espace', 'Utilisateurs\FrontController::myDashboard');
     $routes->post('/mon-profil/update', 'Utilisateurs\ProfilSanteController::update/1');
 
     // Portefeuille Recharge

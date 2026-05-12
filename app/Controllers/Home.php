@@ -15,16 +15,6 @@ class Home extends BaseController
         return view('accueil-invite');
     }
 
-    public function home()
-    {
-        if (session()->get('is_logged_in')) {
-            if (session()->get('is_admin')) {
-                return redirect()->to('/admin/dashboard');
-            }
-            return view('index-front') ;
-        }
-        return view('accueil-invite');
-    }
 
     public function regime(): string
     {

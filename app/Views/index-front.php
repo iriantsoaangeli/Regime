@@ -69,6 +69,13 @@
   <!-- ── MAIN ───────────────────────────────────────────────── -->
   <main class="main">
 
+    <?php
+      $objectif = $objectif ?? null;
+      $regimeActuel = $regimeActuel ?? null;
+      $regimeNourritures = $regimeNourritures ?? [];
+      $activites = $activites ?? [];
+    ?>
+
     <!-- Mon Objectif -->
     <section class="card card--full" id="objectif">
       <div class="card-header">
@@ -85,8 +92,13 @@
 
       <div class="goal-card goal-card--orange">
         <div class="goal-card__text">
-          <p class="goal-card__label">Perdre du poids</p>
-          <p class="goal-card__sub">Atteindre votre poids idéal</p>
+          <?php if ($objectif): ?>
+            <p class="goal-card__label"><?= esc($objectif['libelle'] ?? 'Objectif') ?></p>
+            <p class="goal-card__sub"><?= esc($objectif['description'] ?? 'Objectif personnalisé') ?></p>
+          <?php else: ?>
+            <p class="goal-card__label">Objectif non défini</p>
+            <p class="goal-card__sub">Complétez votre profil pour afficher un objectif</p>
+          <?php endif; ?>
         </div>
         <div class="goal-card__icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="white" stroke-width="3.5"
@@ -108,28 +120,29 @@
           <h2 class="section-title">Régime Actuel</h2>
         </div>
 
-        <div class="calories-row">
-          <span class="calories-label">Calories journalières</span>
-          <span class="calories-value">1800 kcal</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-bar__fill" style="width: 72%"></div>
-        </div>
+        <?php if ($regimeActuel): ?>
+          <p style="margin: 6px 0 12px; color: var(--text-secondary);">
+            <?= esc($regimeActuel['nom'] ?? 'Régime actuel') ?>
+          </p>
+          <p style="margin: 0 0 16px; color: var(--text-secondary); font-size: 0.9rem;">
+            <?= esc($regimeActuel['description'] ?? 'Description non disponible.') ?>
+          </p>
 
-        <div class="macros">
-          <div class="macro macro--blue">
-            <span class="macro__name">Protéines</span>
-            <span class="macro__value">120g</span>
-          </div>
-          <div class="macro macro--orange">
-            <span class="macro__name">Glucides</span>
-            <span class="macro__value">200g</span>
-          </div>
-          <div class="macro macro--yellow">
-            <span class="macro__name">Lipides</span>
-            <span class="macro__value">60g</span>
-          </div>
-        </div>
+          <?php if (!empty($regimeNourritures)): ?>
+            <div class="macros">
+              <?php foreach ($regimeNourritures as $item): ?>
+                <div class="macro macro--blue">
+                  <span class="macro__name"><?= esc($item['nom'] ?? 'Aliment') ?></span>
+                  <span class="macro__value"><?= esc($item['pct_nourriture'] ?? 0) ?>%</span>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          <?php else: ?>
+            <p style="color: var(--text-secondary);">Aucun aliment défini pour ce régime.</p>
+          <?php endif; ?>
+        <?php else: ?>
+          <p style="color: var(--text-secondary);">Aucun régime actif trouvé.</p>
+        <?php endif; ?>
       </section>
 
       <!-- Activités Sportives -->
@@ -148,30 +161,39 @@
         </div>
 
         <ul class="activity-list">
-          <li class="activity activity--blue">
-            <div class="activity__accent"></div>
-            <div class="activity__info">
-              <p class="activity__name">Course à pied</p>
-              <p class="activity__meta">Aujourd'hui · 350 kcal brûlées</p>
-            </div>
-            <span class="activity__duration activity__duration--blue">45 min</span>
-          </li>
-          <li class="activity activity--green">
-            <div class="activity__accent"></div>
-            <div class="activity__info">
-              <p class="activity__name">Musculation</p>
-              <p class="activity__meta">Hier · 280 kcal brûlées</p>
-            </div>
-            <span class="activity__duration activity__duration--green">60 min</span>
-          </li>
-          <li class="activity activity--indigo">
-            <div class="activity__accent"></div>
-            <div class="activity__info">
-              <p class="activity__name">Yoga</p>
-              <p class="activity__meta">Il y a 2 jours · 120 kcal brûlées</p>
-            </div>
-            <span class="activity__duration activity__duration--indigo">30 min</span>
-          </li>
+          <?php if (empty($activites)): ?>
+            <li class="activity activity--blue">
+              <div class="activity__accent"></div>
+              <div class="activity__info">
+                <p class="activity__name">Aucune activité enregistrée</p>
+                <p class="activity__meta">Ajoutez une activité pour la voir ici</p>
+              </div>
+              <span class="activity__duration activity__duration--blue">-</span>
+            </li>
+          <?php else: ?>
+            <?php
+              $activityStyles = [
+                ['activity--blue', 'activity__duration--blue'],
+                ['activity--green', 'activity__duration--green'],
+                ['activity--indigo', 'activity__duration--indigo']
+              ];
+            ?>
+            <?php foreach ($activites as $index => $activite): ?>
+              <?php $style = $activityStyles[$index % count($activityStyles)]; ?>
+              <li class="activity <?= $style[0] ?>">
+                <div class="activity__accent"></div>
+                <div class="activity__info">
+                  <p class="activity__name"><?= esc($activite['nom'] ?? 'Activité') ?></p>
+                  <p class="activity__meta">
+                    <?= esc($activite['description'] ?? 'Programme en cours') ?>
+                  </p>
+                </div>
+                <span class="activity__duration <?= $style[1] ?>">
+                  <?= esc($activite['duree_jours'] ?? '-') ?> j
+                </span>
+              </li>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </ul>
       </section>
 
@@ -183,5 +205,4 @@
   <?= $this->include('templates/footer') ?>
 
 </body>
-
 </html>

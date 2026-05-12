@@ -4,7 +4,7 @@
       <span class="brand-name">HealthyLife</span>
     </div>
     <nav class="navbar__nav">
-      <a href="#" class="nav-link nav-link--active">
+      <a href="/" class="nav-link nav-link--active">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -12,7 +12,7 @@
         </svg>
         Home
       </a>
-      <a href="#" class="nav-link">
+      <a href="/regime" class="nav-link">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
@@ -21,7 +21,7 @@
         </svg>
         Régimes
       </a>
-      <a href="#" class="nav-link">
+      <a href="/sport" class="nav-link">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10" />

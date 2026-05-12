@@ -165,4 +165,7 @@ class FrontController extends BaseController
             'activite' => $bestActivite
         ];
     }
+
+
+    
 }
